@@ -1,0 +1,60 @@
+{% extends 'ordering/base.html' %}
+{% block head %}
+<title>Dropship details</title>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-md-12">
+      <h3>Order Informations</h3>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Shipment Provider</th>
+                <th>Name of Recipient</th>
+                <th>Address</th>
+                <th>Barangay</th>
+                <th>City</th>
+                <th>Province</th>
+                <th>Phone</th>
+                <th>Order</th>
+                <th>Special Instructions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in all_order %}
+              <tr>
+                <td>{{ order.date }}</td>
+                <td>{{ order.shipment_provider }}</td>
+                <td>{{ order.name_of_recipient }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.barangay }}</td>
+                <td>{{ order.city }}</td>
+                <td>{{ order.province }}</td>
+                <td>{{ order.phone }}</td>
+                <td>{{ order.order }}</td>
+                <td>{{ order.special_instructions }}</td>
+              </tr>
+              <form action="{% url 'ordering:order_delete' order.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="order_id" value="{{ order.id }}" />
+                  <button type="submit" class="btn btn-default btn-sm">
+                      <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+              </form>
+              {% endfor %}
+            </tbody>
+            </table>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

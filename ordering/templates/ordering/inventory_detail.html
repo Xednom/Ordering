@@ -1,0 +1,94 @@
+{% extends 'ordering/base.html' %}
+{% block inventorys_active %}active{% endblock %}
+{% block head %}<title>Inventory details</title>{% endblock %}
+
+<img src="{{ inventory.product_logo.image.url }}" class="img-responsive">
+
+
+<h1>{{ inventory.product_name }}</h1>
+<h2>{{ inventory.particulars }}</h2>
+
+{% if error_message %}
+  <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action="{% url 'ordering:inventory_detail' inventory.id %}" method="post">
+  {% csrf_token %}
+  {% for product in inventory.product_set.all %}
+    <input type="radio" id="product{{ forloop.counter }}" name="product" value="{{ product.id }}" />
+    <label for="song{{ forloop.counter }}">
+      {{product.stock_in}}
+      {{product.stock_out}}
+      {{product.balance}}
+    </label>
+  {% endfor %}
+</form>
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a href="{% url 'ordering:detail' %}">
+                    {% if inventory.product_logo %}
+                        <img src="{{ inventory.product_logo.url }}" class="img-responsive">
+                    {% else %}
+                        <h3>No image to display</h3>
+                    {% endif %}
+                </a>
+                <h1><small>{{ inventory.product_name }}</small></h1>
+                <h2>{{ inventory.particulars }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+
+        <ul class="nav nav-pills" style="margin-bottom: 10px;">
+            <li role="presentation" class="active"><a href="{% url 'ordering:inventory_menu' %}">View All</a></li>
+            <li role="presentation"><a href="{% url 'ordering:inventory_create' %}">Add New Inventory</a></li>
+        </ul>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <h3>Product Information</h3>
+
+                {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Stock in</th>
+                        <th>Stock Out</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in inventory.product_set.all %}
+                        <tr>
+                            <td>{{ inventory.product_name }}</td>
+                            <td>
+                            </td>
+                            <td>
+                                <form action="{% url 'ordering:delete_inventory' inventory.id product.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="song_id" value="{{ product.id }}" />
+                                    <button type="submit" class="btn btn-danger btn-xs">
+                                        <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% block head %}<title>Base template</title>{% endblock %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'ordering/style.css' %}"/>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Static navbar -->
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'ordering:home' %}">Ordering System</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            {% if user.is_superuser %}
+              <ul class="nav navbar-nav">
+                <li><a href="{% url 'ordering:detail' %}">Dropship Information</a></li>
+                <li><a href="{% url 'ordering:inventory_menu' %}">Inventory information</a></li>
+                <li><a href="{% url 'ordering:order_create' %}">Dropship add</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>
+                <li><a href="{% url 'ordering:home' %}">Home</a></li>
+                <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
+              </ul>
+            {% elif user.is_authenticated %}
+              <ul class="nav navbar-nav">
+                <li><a href="{% url 'ordering:order_create' %}">Dropship</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>
+                <li><a href="{% url 'ordering:home' %}">Home</a></li>
+                <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
+              </ul>
+            {% else %}
+              <ul class="nav navbar-nav">
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'ordering:register' %}">Register</a></li>
+                <li><a href="{% url 'ordering:login' %}">Login</a></li>
+              </ul>
+            {% endif %}
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </div>
+  </nav>
+    {% block body %}
+    {% endblock %}
+  </body>
+
+</html>
