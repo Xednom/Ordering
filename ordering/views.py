@@ -16,7 +16,7 @@ from django.forms import ModelForm
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
-from .models import Order, Inventory, Product
+from .models import Order, Inventory
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
@@ -55,7 +55,7 @@ def order_success(request):
 class InventoryForm(ModelForm):
     class Meta:
         model = Inventory
-        fields = ['date', 'product_logo', 'product_name', 'particulars']
+        fields = ['date', 'product_logo', 'product_name', 'stock_in', 'stock_out', 'balance', 'particulars']
 
 def inventory_menu(request):
     all_inventorys = Inventory.objects.all()
@@ -63,7 +63,10 @@ def inventory_menu(request):
 
 def inventory_detail(request, inventory_id):
     inventory = get_object_or_404(Inventory, pk=inventory_id)
-    return render(request, "ordering/inventory_detail.html", {'inventory': inventory})
+    context = {
+    "inventory": inventory,
+    }
+    return render(request, "ordering/inventory_detail.html", context)
 
 def inventory_create(request):
     form = InventoryForm(request.POST or None, request.FILES or None)
@@ -88,23 +91,7 @@ def inventory_create(request):
 def inventory_delete(request, inventory_id):
     inventory = Inventory.objects.get(pk=inventory_id)
     inventory.delete()
-    return render(request, 'ordering/inventory_sample.html')
-
-class ProductForm(ModelForm):
-    class Meta:
-        model = Product
-        fields = ['stock_in', 'stock_out', 'balance']
-
-def product_detail(request):
-    all_product = Product.objects.all()
-    return render(request, 'ordering/product_detail.html',{'all_product': all_product})
-
-def product_create(request):
-    form = ProductForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('ordering:inventory_detail')
-    return render(request, 'ordering/dropship_form.html', {'form':form})
+    return redirect(reverse('ordering:inventory_menu'))
 
 def login(request):
     _message = 'Please sign in'

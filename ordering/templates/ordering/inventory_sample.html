@@ -15,7 +15,7 @@
         <!-- View Details -->
         <a href="{% url 'ordering:inventory_detail' inventory.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
-        <!-- Delete Album -->
+        <!-- Delete Product -->
         <form action="{% url 'ordering:inventory_delete' inventory.id %}" method="post" style="display: inline;">
             {% csrf_token %}
             <input type="hidden" name="inventory_id" value="{{ inventory.id }}" />

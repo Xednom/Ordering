@@ -26,22 +26,16 @@ class Inventory(models.Model):
     date = models.DateField(("Date"), default=datetime.now())
     product_logo = models.ImageField(upload_to='product_image', blank=True)
     product_name = models.CharField(max_length=250)
+    stock_in = models.CharField(max_length=250, default='')
+    stock_out = models.CharField(max_length=250, default='')
+    balance = models.CharField(max_length=250, default='')
     particulars = models.CharField(max_length=250)
 
     def get_absolute_url(self):
         return reverse('ordering:inventory_create', kwargs={'pk': self.pk })
 
     def __str__(self):
-        return self.product_logo.name + ' - ' + self.product_name + ' - ' + self.particulars
-
-class Product(models.Model):
-    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
-    stock_in = models.CharField(max_length=250)
-    stock_out = models.CharField(max_length=250)
-    balance = models.CharField(max_length=250)
-
-def __str__(self):
-    return self.stock_in + ' - ' + self.stock_out + ' - ' + self.balance
+        return self.product_logo.name + ' - ' + self.product_name + ' - ' + ' - ' + self.stock_in + ' - ' + self.stock_out + ' - ' + self.balance + ' - ' + self.particulars
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

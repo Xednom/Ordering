@@ -24,7 +24,6 @@ urlpatterns = [
     url(r'^dropship-edit/(?P<pk>\d+)$', views.order_update, name='order_update'),
     url(r'^dropship-delete/(?P<order_id>[0-9]+)/$', views.order_delete, name='order_delete'),
     url(r'^order-successful/$', views.order_success, name='order_success'),
-    url(r'^product-add/$', views.product_create, name='product_create'),
     url(r'^login/$', login, {'template_name': 'ordering/login_user.html'}, name='login'),
     url(r'^logout/$', logout, {'template_name': 'ordering/logout_user.html'}, name ='logout'),
     url(r'^register/$', views.register, name='register'),
