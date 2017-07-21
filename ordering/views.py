@@ -104,7 +104,7 @@ def product_create(request):
     if form.is_valid():
         form.save()
         return redirect('ordering:inventory_detail')
-    return render(request, 'ordering/inventory_menu.html', {'form':form})
+    return render(request, 'ordering/dropship_form.html', {'form':form})
 
 def login(request):
     _message = 'Please sign in'

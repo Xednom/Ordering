@@ -36,7 +36,6 @@ class Inventory(models.Model):
 
 class Product(models.Model):
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
-    id = models.AutoField(primary_key=True)
     stock_in = models.CharField(max_length=250)
     stock_out = models.CharField(max_length=250)
     balance = models.CharField(max_length=250)

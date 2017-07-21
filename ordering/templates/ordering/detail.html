@@ -5,7 +5,7 @@
 
 {% block body %}
 <div class="container-fluid">
-  <div class="row">
+  <div class="table">
     <div class="col-md-12 col-md-12">
       <h3>Order Informations</h3>
       <div class="panel panel-default">
@@ -19,7 +19,7 @@
                 <th>Name of Recipient</th>
                 <th>Address</th>
                 <th>Barangay</th>
-                <th>City</th>
+                <th>City/Municipality</th>
                 <th>Province</th>
                 <th>Phone</th>
                 <th>Order</th>
@@ -39,14 +39,14 @@
                 <td>{{ order.phone }}</td>
                 <td>{{ order.order }}</td>
                 <td>{{ order.special_instructions }}</td>
+                <form action="{% url 'ordering:order_delete' order.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{ order.id }}" />
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </form>
               </tr>
-              <form action="{% url 'ordering:order_delete' order.id %}" method="post" style="display: inline;">
-                  {% csrf_token %}
-                  <input type="hidden" name="order_id" value="{{ order.id }}" />
-                  <button type="submit" class="btn btn-default btn-sm">
-                      <span class="glyphicon glyphicon-trash"></span>
-                  </button>
-              </form>
               {% endfor %}
             </tbody>
             </table>
