@@ -2,7 +2,6 @@
 {% block head %}
 <title>Dropship details</title>
 {% endblock %}
-
 {% block body %}
 <div class="container-fluid">
   <div class="table">
@@ -22,11 +21,14 @@
                 <th>City/Municipality</th>
                 <th>Province</th>
                 <th>Phone</th>
+                <th>Quantity</th>
                 <th>Order</th>
                 <th>Special Instructions</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
+              {% if all_order %}
               {% for order in all_order %}
               <tr>
                 <td>{{ order.date }}</td>
@@ -37,17 +39,22 @@
                 <td>{{ order.city }}</td>
                 <td>{{ order.province }}</td>
                 <td>{{ order.phone }}</td>
+                <td>{{ order.quantity }}</td>
                 <td>{{ order.order }}</td>
                 <td>{{ order.special_instructions }}</td>
-                <form action="{% url 'ordering:order_delete' order.id %}" method="post" style="display: inline;">
+                <td><form action="{% url 'ordering:order_delete' order.id %}" method="post" style="display: inline;">
                     {% csrf_token %}
                     <input type="hidden" name="order_id" value="{{ order.id }}" />
                     <button type="submit" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </form>
+                </td>
               </tr>
               {% endfor %}
+              {% else %}
+              <h1>You don't have any orders.</h1>
+              {% endif %}
             </tbody>
             </table>
           </ul>

@@ -5,6 +5,25 @@ from django.db.models.signals import post_save
 from django.core.urlresolvers import reverse
 
 class Order(models.Model):
+
+    QUANTITY_CHOICES = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+        ('7', '7'),
+        ('8', '8'),
+        ('9', '9'),
+        ('10', '10'),
+    )
+
+    ORDER_CHOICES = (
+        ('Amfit Coffee', 'Amfit Coffee'),
+        ('Algi Cleans', 'Algi Cleans'),
+    )
+
     date = models.DateField(("Date"), default=datetime.now())
     shipment_provider = models.CharField(max_length=250)
     name_of_recipient = models.CharField(max_length=250)
@@ -13,14 +32,31 @@ class Order(models.Model):
     city = models.CharField(max_length=250)
     province = models.CharField(max_length=250)
     phone = models.CharField(max_length=13)
-    order = models.CharField(max_length=250)
+    quantity = models.CharField(max_length=6, choices=QUANTITY_CHOICES)
+    order = models.CharField(max_length=250, choices=ORDER_CHOICES)
     special_instructions = models.CharField(max_length=250, default='')
 
     def get_absolute_url(self):
         return reverse('ordering:dropship_add', kwargs={'pk': self.pk })
 
     def __str__(self):
-        return self.date + ' - ' + self.shipment_provider + ' - ' +  self.name_of_recipient + ' - ' + self.address + ' - ' + self.barangay + ' - ' + self.city + ' - ' + self.province + ' - ' + self.phone + ' - ' + self.order
+        return (
+        self.date
+        + ' - ' + self.shipment_provider
+        + ' - ' + self.name_of_recipient
+        + ' - ' + self.address
+        + ' - ' + self.barangay
+        + ' - ' + self.city
+        + ' - ' + self.province
+        + ' - ' + self.phone
+        + ' - ' + self.quantity
+        + ' - ' + self.order
+        )
+
+class OrderHistory(models.Model):
+    user = models.ForeignKey(User)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    purchase_date = models.DateTimeField(auto_now_add=True)
 
 class Inventory(models.Model):
     date = models.DateField(("Date"), default=datetime.now())
