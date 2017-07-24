@@ -55,8 +55,19 @@ class Order(models.Model):
 
 class OrderHistory(models.Model):
     user = models.ForeignKey(User)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order)
     purchase_date = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('ordering:ordering_history', kwargs={'pk': self.pk })
+
+    def __str__(self):
+        return
+        (
+        self.user
+        + ' - ' + self.order
+        + ' - ' + self.purchase_date
+        )
 
 class Inventory(models.Model):
     date = models.DateField(("Date"), default=datetime.now())

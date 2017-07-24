@@ -1,0 +1,42 @@
+{% extends 'ordering/base.html' %}
+{% block head %}
+<title>Order History</title>
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+  <div class="table">
+    <div class="col-md-12 col-md-12">
+      <h3>Order Informations</h3>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <table class="table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Order</th>
+                <th>Purchase Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if order_history %}
+              {% for order in order_history %}
+              <tr>
+                <td>{{ order.user }}</td>
+                <td>{{ order.order }}</td>
+                <td>{{ order.purchase_date }}</td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <h1>You don't have any orders.</h1>
+              {% endif %}
+            </tbody>
+            </table>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

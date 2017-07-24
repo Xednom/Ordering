@@ -49,6 +49,10 @@ def order_delete(request, order_id):
     order.delete()
     return redirect(reverse('ordering:detail'))
 
+def order_history(request, order_id):
+    order_history = Order.objects.get(Order, pk=order_id)
+    return render(request, 'ordering/ordering_history.html', {'order_history': order_history})
+
 def order_success(request):
     return render(request, 'ordering/order_success.html')
 
