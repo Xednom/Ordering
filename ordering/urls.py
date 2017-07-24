@@ -11,7 +11,6 @@ from django.contrib.auth.views import(
     password_reset_complete
 )
 
-
 urlpatterns = [
     # /ordering/
     url(r'^$', views.home, name='home'),

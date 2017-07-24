@@ -1,15 +1,15 @@
-from django.http import Http404, HttpResponse
 from django.shortcuts import (
     render,
     redirect,
     get_object_or_404
 )
-from ordering.forms import RegistrationForm, EditProfileForm
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import(
     UserChangeForm,
     PasswordChangeForm
 )
+from django.http import Http404, HttpResponse
+from ordering.forms import RegistrationForm, EditProfileForm
+from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import (login as auth_login, authenticate)
 from django.forms import ModelForm
@@ -155,7 +155,6 @@ def edit_profile(request):
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
-
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
