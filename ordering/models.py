@@ -36,13 +36,13 @@ class Order(models.Model):
     order = models.CharField(max_length=250, choices=ORDER_CHOICES)
     special_instructions = models.CharField(max_length=250, default='')
 
+
     def get_absolute_url(self):
         return reverse('ordering:dropship_add', kwargs={'pk': self.pk })
 
     def __str__(self):
         return (
-        self.date
-        + ' - ' + self.shipment_provider
+        self.shipment_provider
         + ' - ' + self.name_of_recipient
         + ' - ' + self.address
         + ' - ' + self.barangay
@@ -51,10 +51,32 @@ class Order(models.Model):
         + ' - ' + self.phone
         + ' - ' + self.quantity
         + ' - ' + self.order
+        + ' - ' + self.special_instructions
         )
 
+    class meta:
+        ordering = ('order')
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    address = models.CharField(max_length=250, default='')
+    barangay = models.CharField(max_length=100, default='')
+    city = models.CharField(max_length=250, default='')
+    province = models.CharField(max_length=100, default='')
+    phone = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='profile_image', blank=True)
+
+    def __str__(self):
+        return self.user.username + ' - ' + self.address + ' - ' + self.barangay + ' - ' + self.city + ' - ' + self.province
+
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        user_profile = UserProfile.objects.create(user=kwargs['instance'])
+
+post_save.connect(create_profile, sender=User)
+
 class OrderHistory(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserProfile)
     order = models.ForeignKey(Order)
     purchase_date = models.DateTimeField(auto_now_add=True)
 
@@ -68,6 +90,9 @@ class OrderHistory(models.Model):
         + ' - ' + self.order
         + ' - ' + self.purchase_date
         )
+
+    class meta:
+        ordering = ('user')
 
 class Inventory(models.Model):
     date = models.DateField(("Date"), default=datetime.now())
@@ -83,20 +108,3 @@ class Inventory(models.Model):
 
     def __str__(self):
         return self.product_logo.name + ' - ' + self.product_name + ' - ' + ' - ' + self.stock_in + ' - ' + self.stock_out + ' - ' + self.balance + ' - ' + self.particulars
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    last_name = models.CharField(max_length=100, default='')
-    first_name = models.CharField(max_length=100, default='')
-    middle_name = models.CharField(max_length=100, default='')
-    address = models.CharField(max_length=250, default='')
-    barangay = models.CharField(max_length=100, default='')
-    city = models.CharField(max_length=250, default='')
-    province = models.CharField(max_length=100, default='')
-    phone_number = models.IntegerField(default=0)
-
-def create_profile(sender, **kwargs):
-    if kwargs['created']:
-        user_profile = UserProfile.objects.create(user=kwargs['instance'])
-
-post_save.connect(create_profile, sender=User)

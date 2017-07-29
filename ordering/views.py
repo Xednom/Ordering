@@ -17,13 +17,14 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
 from .models import Order, Inventory
+from .forms import OrderForm
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['date', 'shipment_provider', 'name_of_recipient', 'address', 'barangay', 'city', 'province', 'phone', 'quantity', 'order', 'special_instructions']
+        fields = ['shipment_provider', 'name_of_recipient', 'address', 'barangay', 'city', 'province', 'phone', 'quantity', 'order', 'special_instructions']
 
 def detail(request):
     all_order = Order.objects.all()
@@ -125,7 +126,7 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/ordering')
+            return render(request, 'ordering/register_success.html')
         else:
             return render(request, 'ordering/register.html', {'form': form})
     else:
@@ -133,6 +134,9 @@ def register(request):
 
         args = {'form': form}
         return render(request, 'ordering/register.html', args)
+
+def register_success(request):
+    return render(request, 'ordering:register_success')
 
 
 def view_profile(request):
