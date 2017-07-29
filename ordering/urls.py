@@ -1,7 +1,5 @@
 from django.conf.urls import  url
 from ordering import views
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib.auth.views import(
     login,
     logout,
@@ -56,4 +54,4 @@ urlpatterns = [
     url(r'^reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', password_reset_confirm, {'template_name': 'ordering/reset_password_confirm.html', 'post_reset_redirect': 'ordering:password_reset_complete'}, name='password_reset_confirm'),
 
     url(r'^reset-password/complete/$', password_reset_complete, {'template_name': 'ordering/reset_password_complete.html'}, name='password_reset_complete')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
