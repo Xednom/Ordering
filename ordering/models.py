@@ -6,33 +6,34 @@ from django.core.urlresolvers import reverse
 
 class Order(models.Model):
 
-    QUANTITY_CHOICES = (
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('4', '4'),
-        ('5', '5'),
-        ('6', '6'),
-        ('7', '7'),
-        ('8', '8'),
-        ('9', '9'),
-        ('10', '10'),
-    )
-
     ORDER_CHOICES = (
         ('Amfit Coffee', 'Amfit Coffee'),
         ('Algi Cleans', 'Algi Cleans'),
     )
 
+    SHIPMENT_CHOICES = (
+        ('LBC','LBC'),
+        ('GO','GO'),
+        ('JRS Express','JRS Express'),
+        ('Zen','Zen'),
+        ('Philpost','Philpost'),
+        ('EMS','EMS'),
+        ('Fedex','Fedex'),
+        ('DHL','DHL'),
+    )
+
     date = models.DateField(("Date"), default=datetime.now())
-    shipment_provider = models.CharField(max_length=250)
-    name_of_recipient = models.CharField(max_length=250)
-    address = models.CharField(max_length=250)
+    shipment_provider = models.CharField(max_length=100, choices=SHIPMENT_CHOICES)
+    last_name = models.CharField(max_length=250)
+    first_name = models.CharField(max_length=250)
+    middle_name = models.CharField(max_length=250)
+    address = models.TextField(max_length=250)
     barangay = models.CharField(max_length=250)
-    city = models.CharField(max_length=250)
+    city_and_municipality = models.CharField(max_length=250)
+    zip_code = models.IntegerField(default=0)
     province = models.CharField(max_length=250)
     phone = models.CharField(max_length=13)
-    quantity = models.CharField(max_length=6, choices=QUANTITY_CHOICES)
+    quantity = models.IntegerField(default=0)
     order = models.CharField(max_length=250, choices=ORDER_CHOICES)
     special_instructions = models.CharField(max_length=250, default='')
 
@@ -43,10 +44,12 @@ class Order(models.Model):
     def __str__(self):
         return (
         self.shipment_provider
-        + ' - ' + self.name_of_recipient
+        + ' - ' + self.last_name
+        + ' - ' + self.first_name
+        + ' - ' + self.middle_name
         + ' - ' + self.address
         + ' - ' + self.barangay
-        + ' - ' + self.city
+        + ' - ' + self.city_and_municipality
         + ' - ' + self.province
         + ' - ' + self.phone
         + ' - ' + self.quantity
@@ -98,9 +101,9 @@ class Inventory(models.Model):
     date = models.DateField(("Date"), default=datetime.now())
     product_logo = models.ImageField(upload_to='product_image', blank=True)
     product_name = models.CharField(max_length=250)
-    stock_in = models.CharField(max_length=250, default='')
-    stock_out = models.CharField(max_length=250, default='')
-    balance = models.CharField(max_length=250, default='')
+    stock_in = models.IntegerField(max_length=6)
+    stock_out = models.IntegerField(max_length=6)
+    balance = models.IntegerField(max_length=6)
     particulars = models.CharField(max_length=250)
 
     def get_absolute_url(self):

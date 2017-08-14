@@ -24,7 +24,7 @@ IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['shipment_provider', 'name_of_recipient', 'address', 'barangay', 'city', 'province', 'phone', 'quantity', 'order', 'special_instructions']
+        fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'zip_code', 'province', 'phone', 'quantity', 'order', 'special_instructions']
 
 def detail(request):
     all_order = Order.objects.all()

@@ -14,8 +14,6 @@
                   {% csrf_token %}
                    {% for field in form %}
                   <p>
-                      {{ field.label_tag }}<br>
-                      {{ field }}
                       {% if field.help_text %}
                         <small style="color: grey">{{ field.help_text }}</small>
                       {% endif %}
@@ -24,6 +22,11 @@
                       {% endfor %}
                   </p>
                    {% endfor %}
+                   {{ form.username }}<br>
+                   {{ form.first_name }}<br>
+                   {{ form.last_name }}<br>
+                   {{ form.password1 }}<br>
+                   {{ form.password2 }}<br>
                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
              </div>
             </div>

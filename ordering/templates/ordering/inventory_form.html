@@ -1,4 +1,5 @@
 {% extends 'ordering/base.html' %}
+{% load crispy_forms_tags %}
 {% block head %}
 <title>Add new inventory</title>
 {% endblock %}
@@ -16,6 +17,7 @@
             <!--- Inventory --->
             <form method="post">
               {% csrf_token %}
+              <!--{{ form|crispy }}-->
               {% include 'ordering/form-template.html' %}
               <button type="submit" class="btn btn-success" value="Submit">Submit</button>
             </form>

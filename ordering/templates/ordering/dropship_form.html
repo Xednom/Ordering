@@ -1,4 +1,6 @@
 {% extends 'ordering/base.html' %}
+{% load crispy_forms_tags %}
+
 {% block head %}
 <title>Add new order</title>
 {% endblock %}
@@ -7,30 +9,44 @@
 
   <div class="row">
 
-    <div class="col-sm-12 col-md-7">
+    <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-body">
           <form class="form-horizontal" method="post">
             <form method="post">
               {% csrf_token %}
+              <!--{{ form|crispy }}-->
               {% include 'ordering/form-template.html' %}
               <button type="submit" class="btn btn-success" value="Submit">Submit</button>
             </form>
         </div>
       </div>
     </div>
-              <h3>Lorem ipsum</h3>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              <h3>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</h3>
-              <p>It has survived not only five centuries, but also the leap into electronic typesetting.</p>
-              <h3>remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset</h3>
-              <ul>
-                  <li>sheets containing Lorem Ipsum passages,</li>
-                  <li>and more recently with desktop publishing software</li>
-                  <li>like Aldus PageMaker including</li>
-                  <li>versions of Lorem Ipsum.</li>
-              </ul>
 
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel panel-header">
+              <h2>Annoucements:</h2>
+            </div>
+            <h3>Lorem ipsum</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <h3>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</h3>
+            <p>It has survived not only five centuries, but also the leap into electronic typesetting.</p>
+            <h3>remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset</h3>
+            <ul>
+                <li>sheets containing Lorem Ipsum passages,</li>
+                <li>and more recently with desktop publishing software</li>
+                <li>like Aldus PageMaker including</li>
+                <li>versions of Lorem Ipsum.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
     </div>
 
 </div>

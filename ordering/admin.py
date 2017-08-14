@@ -9,7 +9,7 @@ class UserProfileAdmin(admin.ModelAdmin):
         #return obj.address
 
 class OrderProfile(admin.ModelAdmin):
-    list_display = ('shipment_provider', 'name_of_recipient', 'address', 'barangay', 'city', 'province', 'phone', 'quantity', 'order', 'special_instructions')
+    list_display = ('shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'province', 'phone', 'quantity', 'order', 'special_instructions')
 
 class InventoryProfile(admin.ModelAdmin):
     list_display = ('product_logo', 'product_name', 'stock_in', 'stock_out', 'balance', 'particulars')
