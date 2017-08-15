@@ -19,8 +19,8 @@
               </tr>
             </thead>
             <tbody>
-              {% if order_history %}
-              {% for order in order_history %}
+              {% if all_history %}
+              {% for order in all_history %}
               <tr>
                 <td>{{ order.user }}</td>
                 <td>{{ order.order }}</td>

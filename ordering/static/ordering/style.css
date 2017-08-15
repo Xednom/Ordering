@@ -9,3 +9,7 @@ ul.errorlist > li {
 .navbar {
     border-radius: 0;
 }
+
+.panel-header{
+  padding: 15px;
+}

@@ -16,7 +16,7 @@ from django.forms import ModelForm
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
-from .models import Order, Inventory
+from .models import Order, Inventory, OrderHistory
 from .forms import OrderForm
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -50,9 +50,14 @@ def order_delete(request, order_id):
     order.delete()
     return redirect(reverse('ordering:detail'))
 
+class OrderHistoryForm(ModelForm):
+    class Meta:
+        model = OrderHistory
+        fields = ['user', 'order']
+
 def order_history(request, order_id):
-    order_history = Order.objects.get(Order, pk=order_id)
-    return render(request, 'ordering/ordering_history.html', {'order_history': order_history})
+    all_history = OrderHistory.objects.get(OrderHistory, pk=order_id)
+    return render(request, 'ordering/ordering_history.html', {'all_history': all_history})
 
 def order_success(request):
     return render(request, 'ordering/order_success.html')

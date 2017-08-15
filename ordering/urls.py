@@ -17,11 +17,11 @@ urlpatterns = [
 
     url(r'^inventory-menu/$', views.inventory_menu, name='inventory_menu'),
 
-    url(r'^(?P<inventory_id>[0-9]+)/$', views.inventory_detail, name='inventory_detail'),
+    url(r'^inventory-detail/(?P<inventory_id>[0-9]+)/$', views.inventory_detail, name='inventory_detail'),
 
     url(r'^inventory-add/$', views.inventory_create, name='inventory_create'),
 
-    url(r'^(?P<inventory_id>[0-9]+)/inventory_delete/$', views.inventory_delete, name='inventory_delete'),
+    url(r'^inventory_delete/(?P<inventory_id>[0-9]+)/$', views.inventory_delete, name='inventory_delete'),
 
     url(r'^dropship-add/$', views.order_create, name='order_create'),
 

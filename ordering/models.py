@@ -80,7 +80,7 @@ post_save.connect(create_profile, sender=User)
 
 class OrderHistory(models.Model):
     user = models.ForeignKey(UserProfile)
-    order = models.ForeignKey(Order)
+    order = models.ManyToManyField(Order)
     purchase_date = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
@@ -91,7 +91,6 @@ class OrderHistory(models.Model):
         (
         self.user
         + ' - ' + self.order
-        + ' - ' + self.purchase_date
         )
 
     class meta:
@@ -111,3 +110,25 @@ class Inventory(models.Model):
 
     def __str__(self):
         return self.product_logo.name + ' - ' + self.product_name + ' - ' + ' - ' + self.stock_in + ' - ' + self.stock_out + ' - ' + self.balance + ' - ' + self.particulars
+
+    def total_balance(self):
+        return self.balance - self.stock_out
+
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.title
+
+    class Meta:
+        ordering = ('title',)
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    publications = models.ManyToManyField(Publication)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.headline
+
+    class Meta:
+        ordering = ('headline',)
