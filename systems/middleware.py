@@ -24,6 +24,9 @@ class LoginRequiredMiddleware:
         path = request.path_info.lstrip('/')
         url_is_exempt = any(url.match(path) for url in EXEMPT_URLS)
 
+        if request.path.startswith(reverse('admin:index')):
+            return None
+
         if path == reverse('ordering:logout').lstrip('/'):
             logout(request)
 

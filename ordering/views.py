@@ -3,73 +3,91 @@ from django.shortcuts import (
     redirect,
     get_object_or_404
 )
-from django.contrib.auth.forms import(
-    UserChangeForm,
-    PasswordChangeForm
-)
-from django.http import Http404, HttpResponse
-from ordering.forms import RegistrationForm, EditProfileForm
-from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import (login as auth_login, authenticate)
-from django.forms import ModelForm
-from django.views import generic
+from django.core.urlresolvers import reverse_lazy
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
+from django.views.generic import TemplateView,ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse
+from django.forms import ModelForm
+
 from .models import Order, Inventory, OrderHistory
-from .forms import OrderForm
+from .forms import RegistrationForm, EditProfileForm, OrderForm, InventoryForm
+
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
-class OrderForm(ModelForm):
-    class Meta:
-        model = Order
-        fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'zip_code', 'province', 'phone', 'quantity', 'order', 'special_instructions']
 
-def detail(request):
-    all_order = Order.objects.all()
-    return render(request, 'ordering/detail.html', {'all_order': all_order})
+class DetailView(ListView):
+    model = Order  # shorthand for setting queryset = models.Car.objects.all()
+    template_name = 'ordering/detail.html'  # optional (the default is app_name/modelNameInLowerCase_list.html; which will look into your templates folder for that path and file)
+    context_object_name = "all_order"  # default is object_list as well as model's_verbose_name_list and/or model's_verbose_name_plural_list, if defined in the model's inner Meta class
+    paginate_by = 10  # and that's it !!
 
-def order_create(request):
-    form = OrderForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('ordering:order_success')
-    return render(request, 'ordering/dropship_form.html', {'form':form})
+
+class OrderList(ListView):
+    model = Order
+
+
+class OrderCreate(CreateView):
+    model = Order
+    success_url = reverse_lazy('ordering:order_success')
+    fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'zip_code', 'province', 'phone', 'quantity', 'order', 'special_instructions']
+
+
+class OrderSuccess(TemplateView):
+    template_name = 'ordering/order_success.html'
+
+# def order_create(request):
+#     form = OrderForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('ordering:order_success')
+#     return render(request, 'ordering/order_form.html', {'form':form})
+
 
 def order_update(request, pk, template_name='ordering/form-template.html'):
-    server = get_object_or_404(Server, pk=pk)
+    server = get_object_or_404(pk=pk)
     form = OrderForm(request.POST or None, instance=server)
     if form.is_valid():
         form.save()
         return redirect('home')
     return render(request, template_name, {'form':form})
 
+
 def order_delete(request, order_id):
     order = Order.objects.get(pk=order_id)
     order.delete()
-    return redirect(reverse('ordering:detail'))
+    return redirect(reverse_lazy('ordering:detail'))
+
 
 class OrderHistoryForm(ModelForm):
     class Meta:
         model = OrderHistory
         fields = ['user', 'order']
 
+
 def order_history(request, order_id):
     all_history = OrderHistory.objects.get(OrderHistory, pk=order_id)
     return render(request, 'ordering/ordering_history.html', {'all_history': all_history})
 
+
 def order_success(request):
     return render(request, 'ordering/order_success.html')
+
 
 class InventoryForm(ModelForm):
     class Meta:
         model = Inventory
-        fields = ['date', 'product_logo', 'product_name', 'stock_in', 'stock_out', 'balance', 'particulars']
+        fields = ['date', 'product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
+
 
 def inventory_menu(request):
     all_inventorys = Inventory.objects.all()
     return render(request, 'ordering/inventory_sample.html', {'all_inventorys': all_inventorys})
+
 
 def inventory_detail(request, inventory_id):
     inventory = get_object_or_404(Inventory, pk=inventory_id)
@@ -77,6 +95,7 @@ def inventory_detail(request, inventory_id):
     "inventory": inventory,
     }
     return render(request, "ordering/inventory_detail.html", context)
+
 
 def inventory_create(request):
     form = InventoryForm(request.POST or None, request.FILES or None)
@@ -98,13 +117,15 @@ def inventory_create(request):
     }
     return render(request, 'ordering/inventory_form.html', context)
 
-def inventory_delete(request, inventory_id):
+
+def inventory_delete(inventory_id):
     inventory = Inventory.objects.get(pk=inventory_id)
     inventory.delete()
-    return redirect(reverse('ordering:inventory_menu'))
+    return redirect(reverse_lazy('ordering:inventory_menu'))
+
 
 def login(request):
-    _message = 'Please sign in'
+    _message = ""
     if request.method == 'POST':
         _username = request.POST['username']
         _password = request.POST['password']
@@ -112,19 +133,22 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                return HttpResponseRedirect(reverse('ordering:register'))
+                return redirect(reverse_lazy('ordering:home'))
             else:
                 _message = 'Your account is not activated'
         else:
-            return render(request, 'ordering/register.html')
-    context = {'message': _message}
-    return render(request, 'ordering/register.html', context)
+            _message = "Username or password is incorrect."
+    context = {'message': _message, }
+    return render(request, 'ordering/login_user.html', context)
+
 
 def home(request):
     return render(request, 'ordering/index.html')
 
+
 def inventory(request):
     return render(request, 'ordering/inventory.html')
+
 
 def register(request):
     if request.method =='POST':
@@ -139,6 +163,7 @@ def register(request):
 
         args = {'form': form}
         return render(request, 'ordering/register.html', args)
+
 
 def register_success(request):
     return render(request, 'ordering:register_success')
@@ -155,11 +180,12 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse('ordering:view_profile'))
+            return redirect(reverse_lazy('ordering:view_profile'))
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
         return render(request, 'ordering/edit_profile.html', args)
+
 
 def change_password(request):
     if request.method == 'POST':
@@ -167,11 +193,11 @@ def change_password(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            return redirect(reverse('ordering:view_profile'))
+            return redirect(reverse_lazy('ordering:view_profile'))
         else:
-            return redirect(reverse('ordering:change_password'))
+            return redirect(reverse_lazy('ordering:change_password'))
 
     else:
         form = PasswordChangeForm(user=request.user)
-        args={'form': form}
+        args = {'form': form}
         return render(request, 'ordering/change_password.html', args)

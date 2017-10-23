@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'ordering.apps.OrderingConfig',
+    'theme.apps.ThemeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,6 +74,13 @@ TEMPLATES = [
     },
 ]
 
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
 WSGI_APPLICATION = 'systems.wsgi.application'
 
 
@@ -111,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Manila'
 
 USE_I18N = True
 
@@ -123,23 +131,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 
+# ######### MEDIA CONFIGURATION
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'systems/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
+STATIC_ROOT = os.path.join(BASE_DIR, 'theme/static')
+# ######### END MEDIA CONFIGURATION
 
 LOGIN_REDIRECT_URL = '/ordering/'
 
 LOGIN_URL = '/ordering/login/'
 
-LOGIN_EXEMPT_URLS = {
+LOGIN_EXEMPT_URLS = (
+    r'^admin/',
     r'^ordering/logout/$',
     r'^ordering/register/$',
     r'^ordering/reset-password/$',
     r'^ordering/reset-password/done/$',
     r'^ordering/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
     r'^ordering/reset-password/complete/$'
-}
+)
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
