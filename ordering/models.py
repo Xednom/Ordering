@@ -13,7 +13,7 @@ class Product(models.Model):
 
 
 class Inventory(models.Model):
-    date = models.DateField(("Date"), default=datetime.now())
+    date = models.DateField(("Date"), default=datetime.now)
     product = models.ForeignKey(Product)
     product_logo = models.ImageField(upload_to='product_image', blank=True)
     stock_in = models.IntegerField()
@@ -27,7 +27,7 @@ class Inventory(models.Model):
 
     def total_balance(self):
         return self.balance - self.stock_out
- 
+
 
 class Order(models.Model):
 
@@ -42,7 +42,7 @@ class Order(models.Model):
         ('DHL', 'DHL'),
     )
 
-    date = models.DateField(("Date"), default=datetime.now())
+    date = models.DateField(("Date"), default=datetime.now)
     shipment_provider = models.CharField(max_length=100, choices=SHIPMENT_CHOICES)
     last_name = models.CharField(max_length=250,)
     first_name = models.CharField(max_length=250)
@@ -100,5 +100,3 @@ class OrderHistory(models.Model):
     order = models.ForeignKey(Product)
     special_instructions = models.CharField(max_length=250, default='')
     purchase_date = models.DateTimeField(auto_now_add=True)
-
-

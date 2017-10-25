@@ -5,13 +5,22 @@ from django.shortcuts import (
 )
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import (login as auth_login, authenticate)
+from django.contrib.auth import (login as auth_login, logout as auth_logout, authenticate)
+from django.contrib import messages
+
+from django.shortcuts import render
+from django.views.generic import TemplateView, ListView
+from django.views.generic import (
+    TemplateView,
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    View
+)
+from django.forms import ModelForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
-from django.views.generic import TemplateView,ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.forms import ModelForm
 
 from .models import Order, Inventory, OrderHistory
 from .forms import RegistrationForm, EditProfileForm, OrderForm, InventoryForm
@@ -34,7 +43,10 @@ class OrderList(ListView):
 class OrderCreate(CreateView):
     model = Order
     success_url = reverse_lazy('ordering:order_success')
-    fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'zip_code', 'province', 'phone', 'quantity', 'order', 'special_instructions']
+    fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name',
+              'address', 'barangay', 'city_and_municipality', 'zip_code',
+              'province', 'phone', 'quantity',
+              'order', 'special_instructions']
 
 
 class OrderSuccess(TemplateView):
@@ -47,6 +59,36 @@ class OrderSuccess(TemplateView):
 #         return redirect('ordering:order_success')
 #     return render(request, 'ordering/order_form.html', {'form':form})
 
+
+class LoginView(View):
+    template_name = 'ordering/login_user.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        if request.method == 'POST':
+            _username = request.POST['username']
+            _password = request.POST['password']
+            user = authenticate(username=_username, password=_password)
+
+            if user is not None:
+                if user.is_active:
+                    auth_login(request, user)
+                    return redirect(reverse_lazy('ordering:home'))
+                else:
+                    messages.warning(request, 'Your account is not activated.')
+            else:
+                messages.error(request, 'Username or password are invalid.')
+        return render(request, self.template_name)
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        auth_logout(request)
+        messages.success(request, 'Your account has been logout successfully.')
+        return redirect(reverse_lazy('ordering:login'))
 
 def order_update(request, pk, template_name='ordering/form-template.html'):
     server = get_object_or_404(pk=pk)
@@ -122,24 +164,6 @@ def inventory_delete(inventory_id):
     inventory = Inventory.objects.get(pk=inventory_id)
     inventory.delete()
     return redirect(reverse_lazy('ordering:inventory_menu'))
-
-
-def login(request):
-    _message = ""
-    if request.method == 'POST':
-        _username = request.POST['username']
-        _password = request.POST['password']
-        user = authenticate(username=_username, password=_password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                return redirect(reverse_lazy('ordering:home'))
-            else:
-                _message = 'Your account is not activated'
-        else:
-            _message = "Username or password is incorrect."
-    context = {'message': _message, }
-    return render(request, 'ordering/login_user.html', context)
 
 
 def home(request):

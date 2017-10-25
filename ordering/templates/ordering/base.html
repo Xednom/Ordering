@@ -5,8 +5,9 @@
     {% block head %}<title>Base template</title>{% endblock %}
     {% load staticfiles %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.scss' %}"/>
-    <link rel="shortcut icon" href="{%  static 'TCL_Shirt_Logo.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.min.css' %}"/>
+    <link rel="javascript" type="js" href="{% static 'js/login-form.js' %}">
+    <link rel="shortcut icon" href="{%  static 'theme/TCL_Shirt_Logo.png' %}">
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -47,13 +48,6 @@
                 <li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>
                 <li><a href="{% url 'ordering:home' %}">Home</a></li>
                 <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
-              </ul>
-            {% else %}
-              <ul class="nav navbar-nav">
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'ordering:register' %}">Register</a></li>
-                <li><a href="{% url 'ordering:login' %}">Login</a></li>
               </ul>
             {% endif %}
           </div><!--/.nav-collapse -->
