@@ -5,6 +5,7 @@ from django.shortcuts import (
 )
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import (login as auth_login, logout as auth_logout, authenticate)
 from django.contrib import messages
 
@@ -40,9 +41,10 @@ class OrderList(ListView):
     model = Order
 
 
-class OrderCreate(CreateView):
+class OrderCreate(SuccessMessageMixin, CreateView):
     model = Order
-    success_url = reverse_lazy('ordering:order_success')
+    success_url = reverse_lazy('ordering:order_create')
+    success_message = "You successfully ordered to the system!"
     fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name',
               'address', 'barangay', 'city_and_municipality', 'zip_code',
               'province', 'phone', 'quantity',
@@ -52,12 +54,20 @@ class OrderCreate(CreateView):
 class OrderSuccess(TemplateView):
     template_name = 'ordering/order_success.html'
 
-# def order_create(request):
-#     form = OrderForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         return redirect('ordering:order_success')
-#     return render(request, 'ordering/order_form.html', {'form':form})
+
+class InventoryCreate(CreateView):
+    model = Inventory
+    success_url = reverse_lazy('ordering:inventory_menu')
+    fields = ['date', 'product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
+
+
+class InventoryDelete(DeleteView):
+    model = Inventory
+    success_url = reverse_lazy('ordering:inventory_menu')
+    pk_url_kwarg = 'inventory_id'
+
+    def get(self, request):
+        messages.success(request, 'Successfully deleted this item.')
 
 
 class LoginView(View):

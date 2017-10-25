@@ -3,6 +3,7 @@
 {% block head %}<title>Inventory menu</title>{% endblock %}
 {% block body %}
 <div class="container-fluid">
+  {% include 'messages/messages.html' %}
   <h1>Inventory Menu</h1>
   {% if all_inventorys %}
       {% for inventory in all_inventorys %}
