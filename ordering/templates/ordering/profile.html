@@ -1,4 +1,4 @@
-{% extends 'ordering/base.html' %}
+{% extends 'base.html' %}
 
 {% block head %}
 <title>Profile</title>
@@ -15,7 +15,7 @@
   <p>Email: {{user.email}}</p>
   <p>Address: {{ user.userprofile.address }}</p>
   <a href="{% url 'ordering:edit_profile' %}" class="btn btn-primary" value="Submit">Edit</a>
-  
+
 </div>
 
 {% endblock %}

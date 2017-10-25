@@ -31,9 +31,9 @@
           <div id="navbar" class="navbar-collapse collapse">
             {% if user.is_superuser %}
               <ul class="nav navbar-nav">
-                <li><a href="{% url 'ordering:detail' %}">Dropship Information</a></li>
-                <li><a href="{% url 'ordering:inventory_menu' %}">Inventory information</a></li>
-                <li><a href="{% url 'ordering:order_create' %}">Dropship add</a></li>
+                <li{% if 'detail' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:detail' %}">Dropship Information</a></li>
+                <li{% if 'inventory-menu' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:inventory_menu' %}">Inventory information</a></li>
+                <li{% if 'dropship-add' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:order_create' %}">Dropship add</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>
