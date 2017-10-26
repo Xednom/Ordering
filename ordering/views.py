@@ -30,6 +30,19 @@ from .forms import RegistrationForm, EditProfileForm, OrderForm, InventoryForm
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
+class AjaxTemplateMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(self, 'ajax_template_name'):
+            split = self.template_name.split('.html')
+            split[-1] = '_inner'
+            split.append('.html')
+            self.ajax_template_name = ''.join(split)
+        if request.is_ajax():
+            self.template_name = self.ajax_template_name
+        return super(AjaxTemplateMixin, self).dispatch(request, *args, **kwargs)
+
+
 class DetailView(ListView):
     model = Order  # shorthand for setting queryset = models.Car.objects.all()
     template_name = 'ordering/detail.html'  # optional (the default is app_name/modelNameInLowerCase_list.html; which will look into your templates folder for that path and file)
@@ -55,10 +68,18 @@ class OrderSuccess(TemplateView):
     template_name = 'ordering/order_success.html'
 
 
-class InventoryCreate(CreateView):
+class InventoryMenu(ListView):
+    model = Inventory
+    template_name = 'ordering/inventory_sample.html'
+    context_object_name = "all_inventorys"
+
+
+class InventoryCreate(SuccessMessageMixin, AjaxTemplateMixin, CreateView):
+    template_name = 'ordering/inventory_sample.html'
     model = Inventory
     success_url = reverse_lazy('ordering:inventory_menu')
-    fields = ['date', 'product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
+    success_message = "Successfully added an item to the inventory."
+    fields = ['product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
 
 
 class InventoryDelete(DeleteView):
@@ -134,11 +155,6 @@ class InventoryForm(ModelForm):
     class Meta:
         model = Inventory
         fields = ['date', 'product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
-
-
-def inventory_menu(request):
-    all_inventorys = Inventory.objects.all()
-    return render(request, 'ordering/inventory_sample.html', {'all_inventorys': all_inventorys})
 
 
 def inventory_detail(request, inventory_id):

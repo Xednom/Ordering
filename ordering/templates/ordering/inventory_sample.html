@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block inventorys_active %}active{% endblock %}
 {% block head %}<title>Inventory menu</title>{% endblock %}
 {% block body %}
@@ -39,7 +41,29 @@
             <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Item
           </button>
         </a>
-      </div>
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info btn-md" data-toggle="modal" href="{% url 'ordering:inventory_create' %}" data-target="#myModal">Open Modal</button>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div id="form-modal-body" class="modal-body">
+                {% include 'ordering/inventory-form-inner.html' %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
     </div>
 </div>
 

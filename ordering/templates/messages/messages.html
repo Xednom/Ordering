@@ -2,20 +2,35 @@
     {% for message in messages %}
     <div class="box {{ message.tags }}" alert="alert">
       <a class='close'></a>
+      <div class="info">
       {% if message.tags == "info" %}
-        <div class="alert alert-info fade in" role="alert"></i>
+        <div class="alert alert-info fade in" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+          {{ message|safe }}
+        </div>
+      </div>
+      <div class="success">
       {% elif message.tags == "success" %}
-        <div class="alert alert-success fade in" role="alert"></i>
+        <div class="alert alert-success fade in" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+          {{ message|safe }}
+        </div>
+      </div>
+      <div class="warning">
       {% elif message.tags == "warning" %}
-        <div class="alert alert-warning fade in" role="alert"></i>
+        <div class="alert alert-warning fade in" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-      {% elif message.tags == "error" %}
-        <div class="alert alert-danger fade in" role="alert"></i>
+          {{ message|safe }}
+        </div>
+      </div>
+      <div class="error">
+        {% elif message.tags == "error" %}
+        <div class="alert alert-danger fade in" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+          {{ message|safe }}
+        </div>
+      </div>
       {% endif %}
-      {{ message|safe }}
     </div>
     {% endfor %}
 {% endif %}
