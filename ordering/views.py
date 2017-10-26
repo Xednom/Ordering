@@ -77,9 +77,9 @@ class InventoryMenu(ListView):
 class InventoryCreate(SuccessMessageMixin, AjaxTemplateMixin, CreateView):
     template_name = 'ordering/inventory_sample.html'
     model = Inventory
-    success_url = reverse_lazy('ordering:inventory_menu')
+    success_url = reverse_lazy('ordering:inventory_create')
     success_message = "Successfully added an item to the inventory."
-    fields = ['product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
+    fields = ['product', 'stock_in', 'stock_out', 'balance', 'particulars']
 
 
 class InventoryDelete(DeleteView):

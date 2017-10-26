@@ -20,7 +20,7 @@ var formAjaxSubmit = function(form, modal) {
      });
  }
  $('#comment-button').click(function() {
-     $('#form-modal-body').load('/inventory_create/', function () {
+     $('#form-modal-body').load('/inventory_menu/', function () {
          $('#myModal').modal('toggle');
          formAjaxSubmit('#form-modal-body form', '#myModal');
      });
