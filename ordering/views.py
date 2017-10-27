@@ -3,6 +3,8 @@ from django.shortcuts import (
     redirect,
     get_object_or_404
 )
+from django.http import JsonResponse
+
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -10,7 +12,7 @@ from django.contrib.auth import (login as auth_login, logout as auth_logout, aut
 from django.contrib import messages
 
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, FormView
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -43,11 +45,17 @@ class AjaxTemplateMixin(object):
         return super(AjaxTemplateMixin, self).dispatch(request, *args, **kwargs)
 
 
+class TestFormView(SuccessMessageMixin, AjaxTemplateMixin, FormView):
+    template_name = 'ordering/test_form.html'
+    success_url = reverse_lazy('home')
+    success_message = "Way to go!"
+
+
 class DetailView(ListView):
-    model = Order  # shorthand for setting queryset = models.Car.objects.all()
-    template_name = 'ordering/detail.html'  # optional (the default is app_name/modelNameInLowerCase_list.html; which will look into your templates folder for that path and file)
-    context_object_name = "all_order"  # default is object_list as well as model's_verbose_name_list and/or model's_verbose_name_plural_list, if defined in the model's inner Meta class
-    paginate_by = 10  # and that's it !!
+    model = Order  # shorthand for setting queryset = models.Order.objects.all()
+    template_name = 'ordering/detail.html'
+    context_object_name = "all_order"
+    paginate_by = 10
 
 
 class OrderList(ListView):
@@ -68,18 +76,22 @@ class OrderSuccess(TemplateView):
     template_name = 'ordering/order_success.html'
 
 
-class InventoryMenu(ListView):
+class InventoryMenu(SuccessMessageMixin, ListView):
     model = Inventory
     template_name = 'ordering/inventory_sample.html'
     context_object_name = "all_inventorys"
+    paginate_by = 10
 
 
-class InventoryCreate(SuccessMessageMixin, AjaxTemplateMixin, CreateView):
-    template_name = 'ordering/inventory_sample.html'
+class InventoryCreate(SuccessMessageMixin, CreateView):
+    context = 'ordering/partials/partial_inventory_create.html'
     model = Inventory
-    success_url = reverse_lazy('ordering:inventory_create')
+    success_url = reverse_lazy('ordering:inventory_menu')
     success_message = "Successfully added an item to the inventory."
-    fields = ['product', 'stock_in', 'stock_out', 'balance', 'particulars']
+    fields = ['product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
+
+    def return_to_response(self, context, **response_kwargs):
+        return self.return_to_json_response(context, **response_kwargs)
 
 
 class InventoryDelete(DeleteView):

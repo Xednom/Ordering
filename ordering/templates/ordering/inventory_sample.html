@@ -7,64 +7,74 @@
 <div class="container-fluid">
   {% include 'messages/messages.html' %}
   <h1>Inventory Menu</h1>
-  {% if all_inventorys %}
-      {% for inventory in all_inventorys %}
-      <div class="col-sm-4 col-lg-2">
-        <div class="thumbnail">
-          <div class="caption">
-            <img src="{{ inventory.product_logo }}" class="img-responsive">
-        <h2><a href="{% url 'ordering:inventory_detail' inventory.id %}">{{ inventory.product_name }}</a></h2>
-
-        <!-- View Details -->
-        <a href="{% url 'ordering:inventory_detail' inventory.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
-
-        <!-- Delete Product -->
-        <form action="{% url 'ordering:inventory_delete' inventory.id %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <input type="hidden" name="inventory_id" value="{{ inventory.id }}" />
-            <button type="submit" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-        </form>
-          </div>
+      <div class="panel panel-default">
+        <div class="panel panel-header">
+          <h3>Inventory Informations</h3>
+          <p>
+          <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add Product</button>
+          <a href="#" class="btn btn-warning btn-md" role="button">Edit product</a>
+          <a href="#" class="btn btn-danger btn-md" role="button">Delete product</a>
+          </p>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <div class="table-responsive">
+              <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Stock In</th>
+                  <th>Stock Out</th>
+                  <th>Balance</th>
+                  <th>Particulars</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if all_inventorys %}
+                {% for inventory in all_inventorys %}
+                <tr>
+                  <td>{{ inventory.product }}</a></td>
+                  <td>{{ inventory.stock_in }}</td>
+                  <td>{{ inventory.stock_out }}</td>
+                  <td>{{ inventory.balance }}</td>
+                  <td>{{ inventory.particulars }}</td>
+                  <td>
+                    <a href="{% url 'ordering:inventory_detail' inventory.id %}" class="btn btn-primary btn-md" role="button">View Details</a>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td colspan="7" class="text-center bg-warning">No products in the inventory</td>
+                </tr>
+                {% endif %}
+              </tbody>
+              </table>
+            {% if is_paginated %}
+              <ul class="pagination">
+                {% if page_obj.has_previous %}
+                  <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                  {% if page_obj.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                  <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+            {% endif %}
+            </div>
+          </ul>
         </div>
       </div>
-      {% endfor %}
-    {% else %}
-      <h4>You don't have any items</h4>
-  {% endif %}
-</div>
-      <div class="col-sm-12">
-        <br>
-        <a href="{% url 'ordering:inventory_create' %}">
-            <button type="button" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Item
-          </button>
-        </a>
-        <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-info btn-md" data-toggle="modal" href="{% url 'ordering:inventory_create' %}" data-target="#myModal">Open Modal</button>
-
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-              </div>
-              <div id="form-modal-body" class="modal-body">
-                {% include 'ordering/inventory-form-inner.html' %}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-    </div>
 </div>
 
 {% endblock %}

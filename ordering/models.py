@@ -28,6 +28,11 @@ class Inventory(models.Model):
     def total_balance(self):
         return self.balance - self.stock_out
 
+    def image_tag(self):
+        return u'<img src="%s" />' % self.product_logo.url_125x125
+    image_tag.short_description = 'Image'
+    image_tag.allow_tags = True
+
 
 class Order(models.Model):
 

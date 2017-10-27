@@ -131,12 +131,6 @@ class OrderHistoryForm(forms.ModelForm):
 
 
 class InventoryForm(forms.ModelForm):
-    product_name = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Product name',
-        }
-    ))
 
     class Meta:
         model = Inventory

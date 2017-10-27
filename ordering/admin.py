@@ -18,6 +18,9 @@ class InventoryProfile(admin.ModelAdmin):
     list_display = ('product', 'product_logo', 'stock_in', 'stock_out', 'balance', 'particulars')
 
 
+fields = ('image_tag',)
+readonly_fields = ('image_tag',)
+
 admin.site.site_header = "TCL BackOffice"
 admin.site.register(Order, OrderProfile)
 admin.site.register(Inventory, InventoryProfile)

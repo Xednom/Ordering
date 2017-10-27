@@ -1,5 +1,12 @@
 Django==1.11.5
+django-admin-tools==0.8.1
+django-appconf==1.0.2
+django-compressor==2.2
 django-crispy-forms==1.6.1
+django-modalview==0.1.5
+django-widget-tweaks==1.4.1
 olefile==0.44
 Pillow==4.2.1
 pytz==2017.2
+rcssmin==1.0.6
+rjsmin==1.0.12

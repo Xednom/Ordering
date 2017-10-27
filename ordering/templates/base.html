@@ -13,7 +13,6 @@
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src"{% static 'js/alert-timer.js' %}"></script>
-    <script type="text/javascript" src"{% static 'js/modal-crud.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
@@ -36,7 +35,7 @@
             {% if user.is_superuser %}
               <ul class="nav navbar-nav">
                 <li{% if 'detail' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:detail' %}">Dropship Information</a></li>
-                <li{% if 'inventory-menu' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:inventory_create' %}">Inventory information</a></li>
+                <li{% if 'inventory-menu' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:inventory_menu' %}">Inventory information</a></li>
                 <li{% if 'dropship-add' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:order_create' %}">Dropship add</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">

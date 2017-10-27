@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^detail/$', views.DetailView.as_view(), name='detail'),
     url(r'^inventory-menu/$', views.InventoryMenu.as_view(), name='inventory_menu'),
+    url(r'^inventory-test-form/$', views.TestFormView.as_view(), name='test_form'),
     url(r'^inventory-detail/(?P<inventory_id>[0-9]+)/$', views.inventory_detail, name='inventory_detail'),
     url(r'^inventory-add/$', views.InventoryCreate.as_view(), name='inventory_create'),
     url(r'^inventory_delete/(?P<inventory_id>[0-9]+)/$', views.InventoryDelete.as_view(), name='inventory_delete'),
