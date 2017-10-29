@@ -8,9 +8,13 @@
     <div class="col-md-12 col-md-12">
       <div class="panel panel-default">
         <div class="panel panel-header">
-          <h3>Order Informations</h3>
+          <div class="row row-button" style="padding-left: 25px;">
+            <h3>Order Informations</h3>
+          <a href="{% url 'ordering:order_create' %}" class="fm-create btn btn-primary" data-fm-head="Add new order" data-fm-callback="reload">Create new</a>
+          </div>
         </div>
         <div class="panel-body">
+          {% include 'messages/messages.html' %}
           <ul>
             <div class="table-responsive">
               <table class="table table-hover">
@@ -28,6 +32,8 @@
                   <th>Quantity</th>
                   <th>Order</th>
                   <th>Special Instructions</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,6 +52,9 @@
                   <td>{{ order.quantity }}</td>
                   <td>{{ order.order }}</td>
                   <td>{{ order.special_instructions }}</td>
+                  <td>{{ order.status }}</td>
+                  <td><a href="{% url 'ordering:order_delete' order.id %}" class="fm-delete btn btn-danger glyphicon glyphicon-trash btn-sm" data-fm-head="Delete this order?" data-fm-callback="reload"></a></td>
+                  <td><a href="{% url 'ordering:order_update' order.id %}" class="fm-update btn btn-warning glyphicon glyphicon-edit btn-sm" data-fm-head="Update this order?" data-fm-callback="reload"></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

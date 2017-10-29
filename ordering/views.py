@@ -5,6 +5,7 @@ from django.shortcuts import (
 )
 from django.http import JsonResponse
 
+from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -12,13 +13,13 @@ from django.contrib.auth import (login as auth_login, logout as auth_logout, aut
 from django.contrib import messages
 
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, FormView
 from django.views.generic import (
     TemplateView,
     ListView,
     CreateView,
     UpdateView,
     DeleteView,
+    FormView,
     View
 )
 from django.forms import ModelForm
@@ -28,33 +29,18 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Order, Inventory, OrderHistory
 from .forms import RegistrationForm, EditProfileForm, OrderForm, InventoryForm
 
+# third party apps
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
-
-
-class AjaxTemplateMixin(object):
-
-    def dispatch(self, request, *args, **kwargs):
-        if not hasattr(self, 'ajax_template_name'):
-            split = self.template_name.split('.html')
-            split[-1] = '_inner'
-            split.append('.html')
-            self.ajax_template_name = ''.join(split)
-        if request.is_ajax():
-            self.template_name = self.ajax_template_name
-        return super(AjaxTemplateMixin, self).dispatch(request, *args, **kwargs)
-
-
-class TestFormView(SuccessMessageMixin, AjaxTemplateMixin, FormView):
-    template_name = 'ordering/test_form.html'
-    success_url = reverse_lazy('home')
-    success_message = "Way to go!"
 
 
 class DetailView(ListView):
     model = Order  # shorthand for setting queryset = models.Order.objects.all()
     template_name = 'ordering/detail.html'
     context_object_name = "all_order"
+    ordering = ['-date']
     paginate_by = 10
 
 
@@ -62,45 +48,76 @@ class OrderList(ListView):
     model = Order
 
 
-class OrderCreate(SuccessMessageMixin, CreateView):
+class OrderCreateView(SuccessMessageMixin, AjaxCreateView):
+    form_class = OrderForm
+    success_message = "Successfully added an order."
+
+    class Meta:
+        model = Order
+        fields = (
+            'shipment_provider',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'address',
+            'barangay',
+            'city_and_municipality',
+            'zip_code',
+            'province',
+            'phone',
+            'quantity',
+            'order',
+            'status',
+            'special_instructions',
+        )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(OrderForm[user]).__init__(*args, **kwargs)
+        if not user.is_superuser:
+            del self.fields['status']
+
+
+class OrderUpdateView(SuccessMessageMixin, AjaxUpdateView):
+    form_class = OrderForm
     model = Order
-    success_url = reverse_lazy('ordering:order_create')
-    success_message = "You successfully ordered to the system!"
-    fields = ['shipment_provider', 'last_name', 'first_name', 'middle_name',
-              'address', 'barangay', 'city_and_municipality', 'zip_code',
-              'province', 'phone', 'quantity',
-              'order', 'special_instructions']
+    success_message = "Successfully updated this order."
+    pk_url_kwarg = 'order_id'
+
+
+class OrderDeleteView(AjaxDeleteView):
+    model = Order
+    pk_url_kwarg = 'order_id'
 
 
 class OrderSuccess(TemplateView):
     template_name = 'ordering/order_success.html'
 
 
-class InventoryMenu(SuccessMessageMixin, ListView):
+class InventoryMenu(ListView):
     model = Inventory
-    template_name = 'ordering/inventory_sample.html'
+    template_name = 'inventory/inventory_sample.html'
     context_object_name = "all_inventorys"
     paginate_by = 10
 
 
-class InventoryCreate(SuccessMessageMixin, CreateView):
-    context = 'ordering/partials/partial_inventory_create.html'
+# FM app views
+class InventoryCreateView(SuccessMessageMixin, AjaxCreateView):
+    form_class = InventoryForm
+    success_message = "Successfully added an item to the inventory"
+
+
+class InventoryDeleteView(AjaxDeleteView):
     model = Inventory
-    success_url = reverse_lazy('ordering:inventory_menu')
-    success_message = "Successfully added an item to the inventory."
-    fields = ['product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
-
-    def return_to_response(self, context, **response_kwargs):
-        return self.return_to_json_response(context, **response_kwargs)
-
-
-class InventoryDelete(DeleteView):
-    model = Inventory
-    success_url = reverse_lazy('ordering:inventory_menu')
     pk_url_kwarg = 'inventory_id'
 
-    def get(self, request):
-        messages.success(request, 'Successfully deleted this item.')
+
+class InventoryUpdateView(SuccessMessageMixin, AjaxUpdateView):
+    form_class = InventoryForm
+    model = Inventory
+    success_message = "Successfully updated this product."
+    pk_url_kwarg = 'inventory_id'
+# FM app views ends here
 
 
 class LoginView(View):
@@ -132,6 +149,7 @@ class LogoutView(View):
         auth_logout(request)
         messages.success(request, 'Your account has been logout successfully.')
         return redirect(reverse_lazy('ordering:login'))
+
 
 def order_update(request, pk, template_name='ordering/form-template.html'):
     server = get_object_or_404(pk=pk)
@@ -172,48 +190,17 @@ class InventoryForm(ModelForm):
 def inventory_detail(request, inventory_id):
     inventory = get_object_or_404(Inventory, pk=inventory_id)
     context = {
-    "inventory": inventory,
-    }
-    return render(request, "ordering/inventory_detail.html", context)
-
-
-def inventory_create(request):
-    form = InventoryForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        inventory = form.save(commit=False)
-        inventory.product_logo = request.FILES['product_logo']
-        file_type = inventory.product_logo.url.split('.')[-1]
-        file_type = file_type.lower()
-        if file_type not in IMAGE_FILE_TYPES:
-            context = {
-                'inventory': inventory,
-                'form': form,
-                'error_message': 'Image file must be PNG, JPG, or JPEG',
-            }
-        inventory.save()
-        return redirect(reverse('ordering:inventory_menu'))
-    context = {
-        "form": form,
-    }
-    return render(request, 'ordering/inventory_form.html', context)
-
-
-def inventory_delete(inventory_id):
-    inventory = Inventory.objects.get(pk=inventory_id)
-    inventory.delete()
-    return redirect(reverse_lazy('ordering:inventory_menu'))
+        "inventory": inventory,
+        }
+    return render(request, "inventory/inventory_detail.html", context)
 
 
 def home(request):
     return render(request, 'ordering/index.html')
 
 
-def inventory(request):
-    return render(request, 'ordering/inventory.html')
-
-
 def register(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()

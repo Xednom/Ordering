@@ -4,17 +4,15 @@
 {% block inventorys_active %}active{% endblock %}
 {% block head %}<title>Inventory menu</title>{% endblock %}
 {% block body %}
-<div class="container-fluid">
-  {% include 'messages/messages.html' %}
+<div class="container inventory-container" style="width: 100%">
   <h1>Inventory Menu</h1>
       <div class="panel panel-default">
         <div class="panel panel-header">
-          <h3>Inventory Informations</h3>
-          <p>
-          <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Add Product</button>
-          <a href="#" class="btn btn-warning btn-md" role="button">Edit product</a>
-          <a href="#" class="btn btn-danger btn-md" role="button">Delete product</a>
-          </p>
+          {% include 'messages/messages.html' %}
+          <h3 class="inventory-title">Inventory Informations</h3>
+          <div class="row inventory-row" style="padding-left: 25px;">
+          <a href="{% url 'ordering:create_inventory' %}" class="fm-create btn btn-primary" data-fm-head="Add new product" data-fm-callback="reload">Create new</a>
+        </div>
         </div>
         <div class="panel-body">
           <ul>
@@ -39,7 +37,10 @@
                   <td>{{ inventory.balance }}</td>
                   <td>{{ inventory.particulars }}</td>
                   <td>
-                    <a href="{% url 'ordering:inventory_detail' inventory.id %}" class="btn btn-primary btn-md" role="button">View Details</a>
+                    <a href="{% url 'ordering:inventory_detail' inventory.id %}" class="btn btn-primary glyphicon glyphicon-search btn-sm" role="button"></a>
+                    <a href="{% url 'ordering:delete_inventory' inventory.id %}" class="fm-delete btn btn-danger glyphicon glyphicon-trash btn-sm" data-fm-head="Delete this product?" data-fm-callback="reload"></a>
+                    <a href="{% url 'ordering:update_inventory' inventory.id %}" class="fm-update btn btn-warning glyphicon glyphicon-edit btn-sm" data-fm-head="Update this product?" data-fm-callback="reload"></a>
+
                   </td>
                 </tr>
                 {% endfor %}
@@ -76,5 +77,4 @@
         </div>
       </div>
 </div>
-
 {% endblock %}

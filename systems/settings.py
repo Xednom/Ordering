@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_modalview',
     'crispy_forms',
-    'compressor'
+    'compressor',
+    'fm',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

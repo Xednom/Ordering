@@ -95,6 +95,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = (
+            'shipment_provider',
             'last_name',
             'first_name',
             'middle_name',
@@ -106,7 +107,8 @@ class OrderForm(forms.ModelForm):
             'phone',
             'quantity',
             'order',
-            'special_instructions'
+            'status',
+            'special_instructions',
         )
 
 
@@ -131,10 +133,34 @@ class OrderHistoryForm(forms.ModelForm):
 
 
 class InventoryForm(forms.ModelForm):
+    stock_in = forms.CharField(required=True, widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'type': 'number',
+        }
+    ))
+    stock_out = forms.CharField(required=True, widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'type': 'number',
+        }
+    ))
+    balance = forms.CharField(required=True, widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'type': 'number',
+        }
+    ))
+    particulars = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+        }
+    ))
 
     class Meta:
         model = Inventory
         fields = (
+            'product_logo',
             'product',
             'stock_in',
             'stock_out',

@@ -36,19 +36,19 @@
               <ul class="nav navbar-nav">
                 <li{% if 'detail' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:detail' %}">Dropship Information</a></li>
                 <li{% if 'inventory-menu' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:inventory_menu' %}">Inventory information</a></li>
-                <li{% if 'dropship-add' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:order_create' %}">Dropship add</a></li>
+                <li><a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">Add order</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>
+                <!--<li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>-->
                 <li><a href="{% url 'ordering:home' %}">Home</a></li>
                 <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
               </ul>
             {% elif user.is_authenticated %}
               <ul class="nav navbar-nav">
-                <li><a href="{% url 'ordering:order_create' %}">Dropship</a></li>
+                <li><a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">Add order</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>
+                <!--<li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>-->
                 <li><a href="{% url 'ordering:home' %}">Home</a></li>
                 <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
               </ul>
@@ -58,8 +58,12 @@
     </div>
   </nav>
   {% endblock %}
-    {% block body %}
-    {% endblock %}
+    {% block body %}{% endblock %}
+    {% include "modal/modal.html" %}
+        <script type="text/javascript">
+            $(function() {
+                $.fm({debug: true});
+            });
+        </script>
   </body>
-
 </html>

@@ -46,6 +46,11 @@ class Order(models.Model):
         ('Fedex', 'Fedex'),
         ('DHL', 'DHL'),
     )
+    ORDER_STATUS = (
+        ('On going', 'On going'),
+        ('Shipping', 'Shipping'),
+        ('On hold', 'On hold'),
+    )
 
     date = models.DateField(("Date"), default=datetime.now)
     shipment_provider = models.CharField(max_length=100, choices=SHIPMENT_CHOICES)
@@ -61,6 +66,7 @@ class Order(models.Model):
     quantity = models.IntegerField(default=0)
     order = models.ForeignKey(Product)
     special_instructions = models.CharField(max_length=250, default='')
+    status = models.CharField(max_length=100, choices=ORDER_STATUS, default='Status')
 
     def __str__(self):
         return (
