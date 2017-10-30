@@ -102,7 +102,7 @@ class InventoryUpdateView(SuccessMessageMixin, AjaxUpdateView):
 
 
 class LoginView(View):
-    template_name = 'ordering/login_user.html'
+    template_name = 'user_account/login_user.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -132,25 +132,6 @@ class LogoutView(View):
         return redirect(reverse_lazy('ordering:login'))
 
 
-def order_update(request, pk, template_name='ordering/form-template.html'):
-    server = get_object_or_404(pk=pk)
-    form = OrderForm(request.POST or None, instance=server)
-    if form.is_valid():
-        form.save()
-        return redirect('home')
-    return render(request, template_name, {'form':form})
-
-
-def order_delete(request, order_id):
-    order = Order.objects.get(pk=order_id)
-    order.delete()
-    return redirect(reverse_lazy('ordering:detail'))
-
-
-def order_success(request):
-    return render(request, 'ordering/order_success.html')
-
-
 class InventoryForm(ModelForm):
     class Meta:
         model = Inventory
@@ -174,14 +155,14 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'ordering/register_success.html')
+            return render(request, 'user_account/register_success.html')
         else:
-            return render(request, 'ordering/register.html', {'form': form})
+            return render(request, 'user_account/register.html', {'form': form})
     else:
         form = RegistrationForm()
 
         args = {'form': form}
-        return render(request, 'ordering/register.html', args)
+        return render(request, 'user_account/register.html', args)
 
 
 def register_success(request):
@@ -190,7 +171,7 @@ def register_success(request):
 
 def view_profile(request):
     args = {'user': request.user}
-    return render(request, 'ordering/profile.html', args)
+    return render(request, 'user_account/profile.html', args)
 
 
 def edit_profile(request):
@@ -203,7 +184,7 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
-        return render(request, 'ordering/edit_profile.html', args)
+        return render(request, 'user_account/edit_profile.html', args)
 
 
 def change_password(request):
@@ -219,4 +200,4 @@ def change_password(request):
     else:
         form = PasswordChangeForm(user=request.user)
         args = {'form': form}
-        return render(request, 'ordering/change_password.html', args)
+        return render(request, 'user_account/change_password.html', args)
