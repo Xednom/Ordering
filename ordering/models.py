@@ -65,8 +65,8 @@ class Order(models.Model):
     phone = models.CharField(max_length=13)
     quantity = models.IntegerField(default=0)
     order = models.ForeignKey(Product)
+    status = models.CharField(max_length=100, choices=ORDER_STATUS, default='On going')
     special_instructions = models.CharField(max_length=250, default='')
-    status = models.CharField(max_length=100, choices=ORDER_STATUS)
 
     def __str__(self):
         return (

@@ -28,7 +28,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Order, Inventory
-from .forms import RegistrationForm, EditProfileForm, OrderForm, InventoryForm
+from .forms import RegistrationForm, EditProfileForm, OrderForm, OrderEditForm, InventoryForm
+
+from django.views.decorators.csrf import csrf_protect
 
 # third party apps
 from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
@@ -58,7 +60,7 @@ class OrderCreateView(SuccessMessageMixin, AjaxCreateView):
 
 
 class OrderUpdateView(SuccessMessageMixin, AjaxUpdateView):
-    form_class = OrderForm
+    form_class = OrderEditForm
     model = Order
     success_message = "Successfully updated this order."
     pk_url_kwarg = 'order_id'

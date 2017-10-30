@@ -92,7 +92,37 @@ class OrderForm(forms.ModelForm):
         }
     ))
 
-    status = forms.CharField(required=True, widget=forms.HiddenInput(
+    class Meta:
+        model = Order
+        fields = (
+            'shipment_provider',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'address',
+            'barangay',
+            'city_and_municipality',
+            'zip_code',
+            'province',
+            'phone',
+            'quantity',
+            'order',
+            'special_instructions',
+        )
+
+
+class OrderEditForm(forms.ModelForm):
+    last_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+        }
+    ))
+    first_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+        }
+    ))
+    middle_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
         }
@@ -116,11 +146,6 @@ class OrderForm(forms.ModelForm):
             'status',
             'special_instructions',
         )
-
-        def __init__(self, user, *args, **kwargs):
-            super(OrderForm, self).__init__(*args, **kwargs)
-            if user.is_active:
-                del self.fields['status']
 
 
 class InventoryForm(forms.ModelForm):
