@@ -11,6 +11,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import (login as auth_login, logout as auth_logout, authenticate)
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 from django.shortcuts import render
 from django.views.generic import (
@@ -26,7 +27,7 @@ from django.forms import ModelForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import Order, Inventory, OrderHistory
+from .models import Order, Inventory
 from .forms import RegistrationForm, EditProfileForm, OrderForm, InventoryForm
 
 # third party apps
@@ -52,30 +53,8 @@ class OrderCreateView(SuccessMessageMixin, AjaxCreateView):
     form_class = OrderForm
     success_message = "Successfully added an order."
 
-    class Meta:
-        model = Order
-        fields = (
-            'shipment_provider',
-            'last_name',
-            'first_name',
-            'middle_name',
-            'address',
-            'barangay',
-            'city_and_municipality',
-            'zip_code',
-            'province',
-            'phone',
-            'quantity',
-            'order',
-            'status',
-            'special_instructions',
-        )
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super(OrderForm[user]).__init__(*args, **kwargs)
-        if not user.is_superuser:
-            del self.fields['status']
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
 
 class OrderUpdateView(SuccessMessageMixin, AjaxUpdateView):
@@ -164,17 +143,6 @@ def order_delete(request, order_id):
     order = Order.objects.get(pk=order_id)
     order.delete()
     return redirect(reverse_lazy('ordering:detail'))
-
-
-class OrderHistoryForm(ModelForm):
-    class Meta:
-        model = OrderHistory
-        fields = ['user', 'order']
-
-
-def order_history(request, order_id):
-    all_history = OrderHistory.objects.get(OrderHistory, pk=order_id)
-    return render(request, 'ordering/ordering_history.html', {'all_history': all_history})
 
 
 def order_success(request):

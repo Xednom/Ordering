@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Order, OrderHistory, Inventory
+from .models import Order, Inventory
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 
@@ -92,6 +92,12 @@ class OrderForm(forms.ModelForm):
         }
     ))
 
+    status = forms.CharField(required=True, widget=forms.HiddenInput(
+        attrs={
+            'class': 'form-control',
+        }
+    ))
+
     class Meta:
         model = Order
         fields = (
@@ -111,25 +117,10 @@ class OrderForm(forms.ModelForm):
             'special_instructions',
         )
 
-
-class OrderHistoryForm(forms.ModelForm):
-
-    class Meta:
-        model = OrderHistory
-        fields = (
-            'shipment_provider',
-            'last_name',
-            'first_name',
-            'middle_name',
-            'address',
-            'barangay',
-            'city_and_municipality',
-            'province',
-            'phone',
-            'quantity',
-            'order',
-            'special_instructions'
-        )
+        def __init__(self, user, *args, **kwargs):
+            super(OrderForm, self).__init__(*args, **kwargs)
+            if user.is_active:
+                del self.fields['status']
 
 
 class InventoryForm(forms.ModelForm):

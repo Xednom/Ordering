@@ -66,7 +66,7 @@ class Order(models.Model):
     quantity = models.IntegerField(default=0)
     order = models.ForeignKey(Product)
     special_instructions = models.CharField(max_length=250, default='')
-    status = models.CharField(max_length=100, choices=ORDER_STATUS, default='Status')
+    status = models.CharField(max_length=100, choices=ORDER_STATUS)
 
     def __str__(self):
         return (
@@ -93,21 +93,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username + ' - ' + self.address + ' - ' + self.barangay + ' - ' + self.city + ' - ' + self.province
-
-
-class OrderHistory(models.Model):
-    user = models.ForeignKey(User)
-    shipment_provider = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=250, )
-    first_name = models.CharField(max_length=250)
-    middle_name = models.CharField(max_length=250)
-    address = models.TextField(max_length=250)
-    barangay = models.CharField(max_length=250)
-    city_and_municipality = models.CharField(max_length=250)
-    zip_code = models.IntegerField(default=0)
-    province = models.CharField(max_length=250)
-    phone = models.CharField(max_length=13)
-    quantity = models.IntegerField(default=0)
-    order = models.ForeignKey(Product)
-    special_instructions = models.CharField(max_length=250, default='')
-    purchase_date = models.DateTimeField(auto_now_add=True)

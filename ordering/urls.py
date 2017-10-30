@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^order-update/order_id=(?P<order_id>[0-9]+)/$', views.OrderUpdateView.as_view(), name='order_update'),
     url(r'^order-delete/order_id=(?P<order_id>[0-9]+)/$', views.OrderDeleteView.as_view(), name='order_delete'),
     url(r'^order-successful/$', views.OrderSuccess.as_view(), name='order_success'),
-    url(r'^order-history/(?P<order_id>[0-9]+)/$', views.order_history, name='order_history'),
     url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
     url(r'^register/$', views.register, name='register'),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Order, OrderHistory, Product, Inventory, UserProfile
+from . models import Order, Product, Inventory, UserProfile
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -7,11 +7,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 
 class OrderProfile(admin.ModelAdmin):
-    list_display = ('shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'province', 'phone', 'quantity', 'order', 'special_instructions')
-
-
-class OrderHistoryProfile(admin.ModelAdmin):
-    list_display = ('user', 'order', 'purchase_date')
+    list_display = ('shipment_provider', 'last_name', 'first_name', 'middle_name', 'address', 'barangay', 'city_and_municipality', 'province', 'phone', 'quantity', 'order', 'status', 'special_instructions')
 
 
 class InventoryProfile(admin.ModelAdmin):
@@ -26,4 +22,3 @@ admin.site.register(Order, OrderProfile)
 admin.site.register(Inventory, InventoryProfile)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Product)
-admin.site.register(OrderHistory, OrderHistoryProfile)
