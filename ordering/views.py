@@ -5,7 +5,6 @@ from django.shortcuts import (
 )
 from django.http import JsonResponse
 
-from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -29,6 +28,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Order, Inventory
 from .forms import RegistrationForm, EditProfileForm, OrderForm, OrderEditForm, InventoryForm
+from settings import base
 
 from django.views.decorators.csrf import csrf_protect
 
