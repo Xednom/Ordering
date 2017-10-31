@@ -104,9 +104,13 @@ TEMPLATES = [
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, 'static'),
+]
 
 WSGI_APPLICATION = 'systems.wsgi.application'
 
@@ -169,7 +173,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
-STATIC_ROOT = os.path.join(BASE_DIR, 'theme/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 # ######### END MEDIA CONFIGURATION
 
 # Update database configuration with $DATABASE_URL.
