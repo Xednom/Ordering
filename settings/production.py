@@ -108,10 +108,6 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-STATICFILES_DIRS = [
-    os.path.join(Ordering, 'static'),
-]
-
 WSGI_APPLICATION = 'systems.wsgi.application'
 
 
