@@ -156,8 +156,8 @@ USE_TZ = True
 # ######### MEDIA CONFIGURATION
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
-STATIC_ROOT = os.path.join(BASE_DIR, 'theme/static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/static')
 # ######### END MEDIA CONFIGURATION
 
 # Update database configuration with $DATABASE_URL.

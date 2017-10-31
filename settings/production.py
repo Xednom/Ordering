@@ -173,7 +173,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 #MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'theme/static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/img')
 # ######### END MEDIA CONFIGURATION
 
 # Extra places for collectstatic to find static files.
