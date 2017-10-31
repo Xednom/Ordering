@@ -15,23 +15,24 @@ class Product(models.Model):
 class Inventory(models.Model):
     date = models.DateField(("Date"), default=datetime.now)
     product = models.ForeignKey(Product)
-    product_logo = models.ImageField(upload_to='product_image', blank=True)
+    # product_logo = models.ImageField(upload_to='product_image', blank=True)
     stock_in = models.IntegerField()
     stock_out = models.IntegerField()
     balance = models.IntegerField()
     particulars = models.CharField(max_length=250)
 
     def __str__(self):
-        template = '{0.product} {0.product_logo} {0.stock_in} {0.stock_out} {0.balance} {0.particulars}'
+        template = '{0.product} {0.stock_in} {0.stock_out} {0.balance} {0.particulars}'
         return template.format(self)
 
     def total_balance(self):
         return self.balance - self.stock_out
 
-    def image_tag(self):
-        return u'<img src="%s" />' % self.product_logo.url_125x125
-    image_tag.short_description = 'Image'
-    image_tag.allow_tags = True
+    # def image_tag(self):
+        # return u'<img src="%s" />' % self.product_logo.url_125x125
+    # image_tag.short_description = 'Image'
+    # image_tag.allow_tags = True
+
 
 
 class Order(models.Model):
@@ -89,7 +90,7 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=250, default='')
     province = models.CharField(max_length=100, default='')
     phone = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='profile_image', blank=True)
+    # image = models.ImageField(upload_to='profile_image', blank=True)
 
     def __str__(self):
         return self.user.username + ' - ' + self.address + ' - ' + self.barangay + ' - ' + self.city + ' - ' + self.province

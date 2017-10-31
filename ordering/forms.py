@@ -176,7 +176,7 @@ class InventoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
         fields = (
-            'product_logo',
+            # 'product_logo',
             'product',
             'stock_in',
             'stock_out',

@@ -11,7 +11,7 @@ class OrderProfile(admin.ModelAdmin):
 
 
 class InventoryProfile(admin.ModelAdmin):
-    list_display = ('product', 'product_logo', 'stock_in', 'stock_out', 'balance', 'particulars')
+    list_display = ('product', 'stock_in', 'stock_out', 'balance', 'particulars')
 
 
 fields = ('image_tag',)

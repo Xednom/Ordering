@@ -135,7 +135,7 @@ class LogoutView(View):
 class InventoryForm(ModelForm):
     class Meta:
         model = Inventory
-        fields = ['date', 'product_logo', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
+        fields = ['date', 'product', 'stock_in', 'stock_out', 'balance', 'particulars']
 
 
 def inventory_detail(request, inventory_id):
