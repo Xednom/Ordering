@@ -3,7 +3,6 @@
 *.pyc
 .idea
 settings/local.py
-settings/base.py
 theme/img/product_image
 bin
 db.sqlite3
