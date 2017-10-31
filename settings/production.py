@@ -17,6 +17,18 @@ import dj_database_url
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) original BASE_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# EMAIL SETUP
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'monde.lacanlalay@gmail.com'
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = ''
+
+ADMINS = (
+    ('Richmond B. Lacanlalay', 'monde.lacanlalay@gmail.com'),
+)
+MANAGERS = ADMINS
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
