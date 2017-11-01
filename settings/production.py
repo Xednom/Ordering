@@ -174,9 +174,9 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/static')
 # ######### END MEDIA CONFIGURATION
 
 # Extra places for collectstatic to find static files.
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'static'),
- ]
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static/'),
+ )
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config()
