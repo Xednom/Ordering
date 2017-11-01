@@ -76,9 +76,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'systems.middleware.LoginRequiredMiddleware'
-    # Simplified static file serving.
-    # https://warehouse.python.org/project/whitenoise/
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'systems.urls'
@@ -180,8 +177,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/img')
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
  )
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config()
