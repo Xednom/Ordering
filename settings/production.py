@@ -68,6 +68,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -177,6 +178,12 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static/static/'),
  )
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config()
