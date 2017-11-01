@@ -19,6 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -65,7 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'systems.middleware.LoginRequiredMiddleware',
+    'systems.middleware.LoginRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'systems.urls'
@@ -162,9 +163,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/static')
 # ######### END MEDIA CONFIGURATION
 
 # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#    os.path.join(PROJECT_ROOT, 'static'),
-# )
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+ )
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
