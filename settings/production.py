@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'admin_tools.menu',
     'admin_tools.dashboard',
     'ordering.apps.OrderingConfig',
-    'theme.apps.ThemeConfig',
+    'static.apps.StaticConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -171,15 +171,15 @@ USE_TZ = True
 
 # ######### MEDIA CONFIGURATION
 STATIC_URL = '/static/'
-#MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/img')
 # ######### END MEDIA CONFIGURATION
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
-)
+ )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
