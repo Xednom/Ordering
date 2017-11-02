@@ -12,12 +12,25 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
-from .base import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) original BASE_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# JSON-based secrets module
+with open('secrets.json') as f:
+    secrets = json.loads(f.read())
+
+def get_env_variable(SECRET_KEY):
+        """Get the environment variable or return exception."""
+        try:
+            return os.environ.get['SECRET_KEY']
+        except KeyError:
+            error_msg = 'Set the {} environment variable'.format(SECRET_KEY)
+            raise ImproperlyConfigured(error_msg)
+        SECRET_KEY = get_secret('SECRET_KEY')
+
 
 # EMAIL SETUP
 EMAIL_HOST = 'smtp.gmail.com'
@@ -187,9 +200,8 @@ STATICFILES_DIRS = (
 
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config()
+db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # SSL/TLS SETTINGS FOR DJANGO
 CORS_REPLACE_HTTPS_REFERER = True
