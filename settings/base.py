@@ -42,7 +42,7 @@ def get_env_variable(SECRET_KEY):
 SECRET_KEY = os.environ.get('SECRET_KEY', '4)lhuo)5slamqw-p!*qkx*3s7=4u1z=90)h3(zvrlh@41tvey3ar6pdy')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -196,15 +196,14 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 # SSL/TLS SETTINGS FOR DJANGO
-CORS_REPLACE_HTTPS_REFERER = True
+CORS_REPLACE_HTTPS_REFERER = False
 HOST_SCHEME = "https://"
-SECURE_PROXY_SSL_HEADER = None
+SECURE_PROXY_SSL_HEADER = False
 SECURE_SSL_REDIRECT = False
-SECURE_HSTS_SECONDS = 1
+SECURE_HSTS_SECONDS = None
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-SECURE_HSTS_SECONDS = None
 SECURE_FRAME_DENY = False
 SECURE_HSTS_PRELOAD = False
 SECURE_CONTENT_TYPE_NOSNIFF = False

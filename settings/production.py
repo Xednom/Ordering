@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+from .base import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) original BASE_DIR
@@ -35,7 +36,7 @@ MANAGERS = ADMINS
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', '4)lhuo)5slmqw-p!*qkx*37=4u1z=90)3(zvrh@41tvy3ar6pd')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -193,12 +194,12 @@ DATABASES['default']['CONN_MAX_AGE'] = 500
 # SSL/TLS SETTINGS FOR DJANGO
 CORS_REPLACE_HTTPS_REFERER = True
 HOST_SCHEME = "https://"
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = None
 SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 1000000
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 1000000
 SECURE_FRAME_DENY = True
 SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True

@@ -11,7 +11,8 @@ from whitenoise.django import DjangoWhiteNoise
 
 import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Ordering.settings.production")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
