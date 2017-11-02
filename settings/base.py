@@ -12,19 +12,34 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+import json
+# Normally you should not import ANYTHING from Django directly
+# into your settings, but ImproperlyConfigured is an exception.
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) original BASE_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# JSON-based secrets module
+with open('secrets.json') as f:
+    secrets = json.loads(f.read())
 
+def get_env_variable(SECRET_KEY):
+        """Get the environment variable or return exception."""
+        try:
+            return os.environ.get['SECRET_KEY']
+        except KeyError:
+            error_msg = 'Set the {} environment variable'.format(SECRET_KEY)
+            raise ImproperlyConfigured(error_msg)
+        SECRET_KEY = get_secret('SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4)lhuo)5slmqw-p!*qkx*37=4u1z=90)3(zvrh@41tvy3ar6pd'
+SECRET_KEY = os.environ.get('SECRET_KEY', '4)lhuo)5slamqw-p!*qkx*3s7=4u1z=90)h3(zvrlh@41tvey3ar6pdy')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -183,17 +198,17 @@ DATABASES['default'].update(db_from_env)
 # SSL/TLS SETTINGS FOR DJANGO
 CORS_REPLACE_HTTPS_REFERER = True
 HOST_SCHEME = "https://"
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = None
+SECURE_SSL_REDIRECT = False
 SECURE_HSTS_SECONDS = 1
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 1000000
-SECURE_FRAME_DENY = True
-SECURE_HSTS_PRELOAD = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_SECONDS = None
+SECURE_FRAME_DENY = False
+SECURE_HSTS_PRELOAD = False
+SECURE_CONTENT_TYPE_NOSNIFF = False
+SECURE_BROWSER_XSS_FILTER = False
 
 LOGIN_REDIRECT_URL = '/ordering/'
 
