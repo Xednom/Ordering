@@ -4,10 +4,20 @@
   border-radius: 0;
   position: relative;
   width: 100%;
+  background-color: #438eb9;
+}
 
-  .img-tcl {
-    height: 130px;
-    width: 210px;
+#navbar {
+  .nav, .navbar-nav, li, a {
+    color: white;
+  }
+}
+
+.navbar-brand {
+  h3 {
+    margin-top: -2px;
+    margin-left: -2px;
+    color: white;
   }
 }
 
@@ -17,11 +27,6 @@
       padding-top: 20px;
       padding-left: 250px;
       width: 75%;
-    }
-
-    .img-tcl {
-      height: 0px;
-      width: 0px;
     }
   }
 }
