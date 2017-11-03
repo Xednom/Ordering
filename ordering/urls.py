@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from ordering import views
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.views import(
     login,
     logout,
@@ -8,6 +8,8 @@ from django.contrib.auth.views import(
     password_reset_confirm,
     password_reset_complete
 )
+from ordering import views
+
 
 urlpatterns = [
     # /ordering/
@@ -15,8 +17,8 @@ urlpatterns = [
     url(r'add-product/$', views.InventoryCreateView.as_view(), name='create_inventory'),
     url(r'delete/product_id=(?P<inventory_id>[0-9]+)/$', views.InventoryDeleteView.as_view(), name='delete_inventory'),
     url(r'update/product_id=(?P<inventory_id>[0-9]+)/$', views.InventoryUpdateView.as_view(), name='update_inventory'),
-    url(r'^detail/$', views.DetailView.as_view(), name='detail'),
-    url(r'^inventory-menu/$', views.InventoryMenu.as_view(), name='inventory_menu'),
+    url(r'^detail/$', permission_required('ordering.Orders')(views.DetailView.as_view()), name='detail'),
+    url(r'^inventory-menu/$', permission_required('ordering.Inventorys')(views.InventoryMenu.as_view()), name='inventory_menu'),
     url(r'^inventory-detail/product_id=(?P<inventory_id>[0-9]+)/$', views.inventory_detail, name='inventory_detail'),
     url(r'^order-create/$', views.OrderCreateView.as_view(), name='order_create'),
     url(r'^order-update/order_id=(?P<order_id>[0-9]+)/$', views.OrderUpdateView.as_view(), name='order_update'),

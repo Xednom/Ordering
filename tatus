@@ -1,0 +1,64 @@
+[1mdiff --git a/ordering/templates/user_account/register.html b/ordering/templates/user_account/register.html[m
+[1mindex 6ee5df2..c57fac0 100644[m
+[1m--- a/ordering/templates/user_account/register.html[m
+[1m+++ b/ordering/templates/user_account/register.html[m
+[36m@@ -11,7 +11,6 @@[m
+              <div class="form-group">[m
+                 <h1>Register</h1>[m
+                 <form method="post">[m
+[31m-                  {% csrf_token %}[m
+                    {% for field in form %}[m
+                   <p>[m
+                       {% if field.help_text %}[m
+[36m@@ -22,6 +21,7 @@[m
+                       {% endfor %}[m
+                   </p>[m
+                    {% endfor %}[m
+[32m+[m[32m                   {% csrf_token %}[m
+                    {{ form.username }}<br>[m
+                    {{ form.first_name }}<br>[m
+                    {{ form.last_name }}<br>[m
+[1mdiff --git a/ordering/urls.py b/ordering/urls.py[m
+[1mindex 3af83e5..874ab5b 100644[m
+[1m--- a/ordering/urls.py[m
+[1m+++ b/ordering/urls.py[m
+[36m@@ -1,5 +1,5 @@[m
+ from django.conf.urls import url[m
+[31m-from ordering import views[m
+[32m+[m[32mfrom django.contrib.auth.decorators import login_required, permission_required[m
+ from django.contrib.auth.views import([m
+     login,[m
+     logout,[m
+[36m@@ -8,6 +8,8 @@[m [mfrom django.contrib.auth.views import([m
+     password_reset_confirm,[m
+     password_reset_complete[m
+ )[m
+[32m+[m[32mfrom ordering import views[m
+[32m+[m
+ [m
+ urlpatterns = [[m
+     # /ordering/[m
+[36m@@ -15,8 +17,8 @@[m [murlpatterns = [[m
+     url(r'add-product/$', views.InventoryCreateView.as_view(), name='create_inventory'),[m
+     url(r'delete/product_id=(?P<inventory_id>[0-9]+)/$', views.InventoryDeleteView.as_view(), name='delete_inventory'),[m
+     url(r'update/product_id=(?P<inventory_id>[0-9]+)/$', views.InventoryUpdateView.as_view(), name='update_inventory'),[m
+[31m-    url(r'^detail/$', views.DetailView.as_view(), name='detail'),[m
+[31m-    url(r'^inventory-menu/$', views.InventoryMenu.as_view(), name='inventory_menu'),[m
+[32m+[m[32m    url(r'^detail/$', permission_required('ordering.Orders')(views.DetailView.as_view()), name='detail'),[m
+[32m+[m[32m    url(r'^inventory-menu/$', permission_required('ordering.Inventorys')(views.InventoryMenu.as_view()), name='inventory_menu'),[m
+     url(r'^inventory-detail/product_id=(?P<inventory_id>[0-9]+)/$', views.inventory_detail, name='inventory_detail'),[m
+     url(r'^order-create/$', views.OrderCreateView.as_view(), name='order_create'),[m
+     url(r'^order-update/order_id=(?P<order_id>[0-9]+)/$', views.OrderUpdateView.as_view(), name='order_update'),[m
+[1mdiff --git a/systems/urls.py b/systems/urls.py[m
+[1mindex ea1f4d1..2149894 100644[m
+[1m--- a/systems/urls.py[m
+[1m+++ b/systems/urls.py[m
+[36m@@ -8,7 +8,7 @@[m [mfrom systems import views[m
+ [m
+ urlpatterns = [[m
+     url(r'^$', views.login_redirect, name='login_redirect'),[m
+[31m-    url(r'^admin/', admin.site.urls),  # original django admin[m
+[32m+[m[32m    url(r'^tcl-admin/', admin.site.urls),  # original django admin[m
+     url(r'^admin_tools/', include('admin_tools.urls')),  # this is not a replacement for admin just a top layer for it use the original one[m
+     url(r'^ordering/', include('ordering.urls', namespace='ordering')),[m
+ ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)[m
