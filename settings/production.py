@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'compressor',
     'fm',
+    'clear_cache',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
