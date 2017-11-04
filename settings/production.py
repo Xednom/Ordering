@@ -201,7 +201,7 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # commented this out because heroku app returned a server error 500
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Update database configuration with $DATABASE_URL.
@@ -211,7 +211,7 @@ DATABASES['default'].update(db_from_env)
 # SSL/TLS SETTINGS FOR DJANGO
 CORS_REPLACE_HTTPS_REFERER = True
 HOST_SCHEME = "https://"
-SECURE_PROXY_SSL_HEADER = None
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 1000000
 SESSION_COOKIE_SECURE = True
@@ -221,6 +221,7 @@ SECURE_FRAME_DENY = True
 SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
 
 LOGIN_REDIRECT_URL = '/ordering/'
 
