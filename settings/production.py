@@ -187,7 +187,7 @@ USE_TZ = True
 
 
 # ######### MEDIA CONFIGURATION
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
@@ -195,13 +195,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'theme/img')
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'staticfiles'),
+    os.path.join(PROJECT_ROOT, 'static'),
  )
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # commented this out because heroku app returned a server error 500
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # commented this out because heroku app returned a server error 500
 
 
 # Update database configuration with $DATABASE_URL.
