@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     {% block head %}<title>Base template</title>{% endblock %}
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
@@ -60,6 +61,11 @@
     </div>
   </nav>
   {% endblock %}
+  {% block sidebar %}
+    {% if user.is_superuser %}
+      {% include 'dashboard/dashboard.html' %}
+    {% endif %}
+  {% endblock sidebar %}
     {% block body %}{% endblock %}
     {% include "modal/modal.html" %}
         <script type="text/javascript">
