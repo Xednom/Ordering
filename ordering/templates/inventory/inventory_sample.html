@@ -4,15 +4,13 @@
 {% block inventorys_active %}active{% endblock %}
 {% block head %}<title>Inventory menu</title>{% endblock %}
 {% block body %}
-<div class="container inventory-container" style="width: 100%">
+<div class="container inventory-container">
   <h1>Inventory Menu</h1>
       <div class="panel panel-default">
-        <div class="panel panel-header">
+        <div class="panel panel-header" style="padding-left: 25px;">
           {% include 'messages/messages.html' %}
           <h3 class="inventory-title">Inventory Informations</h3>
-          <div class="row inventory-row" style="padding-left: 25px;">
           <a href="{% url 'ordering:create_inventory' %}" class="fm-create btn btn-primary" data-fm-head="Add new product" data-fm-callback="reload">Create new</a>
-        </div>
         </div>
         <div class="panel-body">
           <ul>
@@ -25,6 +23,7 @@
                   <th>Stock Out</th>
                   <th>Balance</th>
                   <th>Particulars</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>

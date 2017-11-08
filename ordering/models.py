@@ -34,7 +34,6 @@ class Inventory(models.Model):
     # image_tag.allow_tags = True
 
 
-
 class Order(models.Model):
 
     SHIPMENT_CHOICES = (

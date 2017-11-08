@@ -1,5 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+//Variables
+$primary-color: #30a5ff;
+$primary-color-hover: #50b3ff;
+
+
 .navbar {
   border-radius: 0;
   position: relative;
@@ -31,14 +36,14 @@
   }
 }
 
-.inventory_container {
+.order-information {
+  width: 83.8%;
+}
+
+.inventory-container {
   width:83%;
   margin-left: 317.833px;
-
-  .inventory-row {
-    padding-left: 25px;
   }
-}
 
 .login-page {
   width: 360px;
@@ -170,5 +175,12 @@
   .close {
     height: 5px;
     width: 5px;
+  }
+}
+
+.sidebar {
+  a:hover {
+    background-color: #50b3ff!important;
+    color: #fff;
   }
 }
