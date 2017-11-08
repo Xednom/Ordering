@@ -21,6 +21,5 @@
     <li {% if 'detail' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:detail' %}"><em class="fa fa-calendar">&nbsp;</em> Dropship Information</a></li>
     <li><a href="{% url 'ordering:inventory_menu' %}"><em class="fa fa-bar-chart">&nbsp;</em> Inventory Information</a></li>
     <li><a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">&nbsp; Add order</a></li>
-    <li><a href="{% url 'ordering:logout' %}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
   </ul>
 </div><!--/.sidebar-->
