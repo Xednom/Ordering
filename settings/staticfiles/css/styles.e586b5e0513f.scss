@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import 'styles-dashboard';
 
 //Variables
 $primary-color: #30a5ff;
@@ -164,16 +165,5 @@ $primary-color-hover: #50b3ff;
   .close {
     height: 5px;
     width: 5px;
-  }
-}
-
-.sidebar {
-  a:hover {
-    background-color: #50b3ff!important;
-    color: #fff;
-  }
-
-  a:active {
-    background-color: #50b3ff!important;
   }
 }
