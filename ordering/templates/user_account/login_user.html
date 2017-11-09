@@ -7,10 +7,11 @@
 {% block body %}
 <div class="login-page">
   <div class="form">
+    <input style="display:none">
     <form id="login-form" class="form-signin" action="{% url 'ordering:login' %}" method="post">{% csrf_token %}
       {% include 'messages/messages.html' %}
       <input class="tcl-username" type="text" name="username" placeholder="username" autocomplete="off" required/>
-      <input class="tcl-password" type="password" name="password" placeholder="password" required/>
+      <input class="tcl-password" type="password" name="password" placeholder="password" autocomplete="off" required/>
       <button type="submit">login</button>
       <p class="message">Not registered? <a href="{% url 'ordering:register' %}">Create an account</a></p>
     </form>
