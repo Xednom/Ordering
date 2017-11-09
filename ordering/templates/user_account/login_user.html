@@ -7,7 +7,7 @@
 {% block body %}
 <div class="login-page">
   <div class="form">
-    <form id="login-form" class="form-signin" action="{% url 'ordering:login' %}" method="post">{% csrf_token %}
+    <form id="login-form" class="form-signin" action="{% url 'ordering:login' %}" method="post" autocomplete="off">{% csrf_token %}
       {% include 'messages/messages.html' %}
       <input class="tcl-username" type="text" name="username" placeholder="username" autocomplete="off" required/>
       <input class="tcl-password" type="password" name="password" placeholder="password" autocomplete="off" required/>
