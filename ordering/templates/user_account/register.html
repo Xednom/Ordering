@@ -38,6 +38,16 @@
   <div class="form register-form">
     <form id="register-form" action="{% url 'ordering:register' %}" class="form-signin" method="post" autocomplete="off">{% csrf_token %}
         {% include 'messages/messages.html' %}
+         {% for field in form %}
+                  <p>
+                      {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                      {% endif %}
+                      {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                  </p>
+         {% endfor %}
       {{ form.username }}
       {{ form.first_name }}
       {{ form.last_name }}
