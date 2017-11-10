@@ -60,6 +60,16 @@ body {
   margin: auto;
 }
 
+.register-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.register-success-container {
+  padding-top: 75px;
+}
+
 .form {
   position: relative;
   z-index: 1;
@@ -82,7 +92,7 @@ body {
       font-size: 14px;
     }
 
-  .tcl-username, .tcl-password {
+  .tcl-username, .tcl-password, .tcl-last_name, .tcl-first_name, .tcl-password1, .tcl-password2 {
       font-family: "Roboto", sans-serif;
       outline: 0;
       background: #f2f2f2;

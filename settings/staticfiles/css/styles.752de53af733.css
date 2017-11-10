@@ -42,9 +42,6 @@ body {
   padding: 8% 0 0;
   margin: auto; }
 
-.register-success-container {
-  padding-top: 75px; }
-
 .form {
   position: relative;
   z-index: 1;
@@ -63,7 +60,7 @@ body {
     margin: 0 0 15px;
     box-sizing: border-box;
     font-size: 14px; }
-  .form .tcl-username, .form .tcl-password, .form .tcl-last_name, .form .tcl-first_name, .form .tcl-password1, .form .tcl-password2 {
+  .form .tcl-username, .form .tcl-password {
     font-family: "Roboto", sans-serif;
     outline: 0;
     background: #f2f2f2;
