@@ -1,25 +1,18 @@
-<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-  <div class="profile-sidebar">
-    <div class="profile-userpic">
-      <img src="#" class="img-responsive" alt="">
-    </div>
-    <div class="profile-usertitle">
-      <div class="profile-usertitle-name">Username: {{ user.username }}</div>
-      <div class="profile-fnametitle-name">Name: {{ user.last_name }}, {{ user.first_name }}</div>
-      <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div class="divider"></div>
-  <form role="search">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search">
-    </div>
-  </form>
-  <ul class="nav menu">
-    <li class="active"><a href="#"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-    <li {% if 'detail' in request.path %} class="active" {% endif %}><a href="{% url 'ordering:detail' %}"><em class="fa fa-calendar">&nbsp;</em> Dropship Information</a></li>
-    <li><a href="{% url 'ordering:inventory_menu' %}"><em class="fa fa-bar-chart">&nbsp;</em> Inventory Information</a></li>
-    <li><a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">&nbsp; Add order</a></li>
-  </ul>
-</div><!--/.sidebar-->
+<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ordering:detail' %}">Dropship Information</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ordering:inventory_menu' %}">Inventory Information</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">Add order</a>
+            </li>
+          </ul>
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ordering:logout' %}">Logout</a>
+            </li>
+</nav>

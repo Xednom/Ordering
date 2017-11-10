@@ -11,6 +11,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import (login as auth_login, logout as auth_logout, authenticate)
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 from django.shortcuts import render
 from django.views.generic import (
@@ -46,9 +47,10 @@ class DetailView(ListView):
     ordering = ['-date']
     paginate_by = 10
 
-
-class OrderList(ListView):
-    model = Order
+    def get_context_date(self, **kwargs):
+        context = super(Order, self).get_context_data(**kwargs)
+        context['count'] = self.get_queryset().count()
+        return context
 
 
 class OrderCreateView(SuccessMessageMixin, AjaxCreateView):

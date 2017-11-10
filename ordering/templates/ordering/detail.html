@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
-{% block head %}
-<title>Dropship details</title>
-{% endblock %}
+{% block head %}<title>Dropship details</title>{% endblock %}
 {% block body %}
-<div class="container-fluid">
-  <div class="table">
-    <div class="col-md-12 col-md-12 order-information">
+<div class="container detail-container">
       <div class="panel panel-default">
         <div class="panel panel-header">
           <div class="row row-button" style="padding-left: 25px;">
@@ -84,13 +80,14 @@
                   <li class="disabled"><span>&raquo;</span></li>
                 {% endif %}
               </ul>
+                <div class="panel panel-footer">
+                    <span><strong>{{ page_obj.paginator.count }}</strong> total order count.</span>
+                </div>
             {% endif %}
             </div>
           </ul>
         </div>
       </div>
-    </div>
-  </div>
 </div>
 
 {% endblock %}

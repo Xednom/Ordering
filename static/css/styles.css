@@ -1,7 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+body {
+  background-color: #f2f2f2; }
+
 .navbar {
   border-radius: 0;
-  position: relative;
+  position: fixed;
   width: 100%;
   background-color: #438eb9; }
 
@@ -18,11 +21,15 @@
   padding-left: 250px;
   width: 75%; }
 
-.order-information {
-  width: 83.8%; }
-
 .inventory-container {
   width: 83%;
+  padding-top: 75px;
+  padding-left: 15px;
+  margin-left: 317.833px; }
+
+.detail-container {
+  width: 83%;
+  padding-top: 75px;
   margin-left: 317.833px; }
 
 .login-page {
@@ -117,10 +124,30 @@
     height: 5px;
     width: 5px; }
 
-.sidebar a:hover {
-  background-color: #50b3ff !important;
-  color: #fff; }
-.sidebar a:active {
-  background-color: #50b3ff !important; }
+.sidebar {
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
+  border-right: 1px solid #eee;
+  background-color: white; }
+  .sidebar .nav {
+    margin-bottom: 20px; }
+  .sidebar .nav-item {
+    width: 100%; }
+    .sidebar .nav-item a:hover {
+      background-color: #50b3ff !important;
+      color: #fff; }
+    .sidebar .nav-item a:active {
+      background-color: #50b3ff !important; }
+  .sidebar .nav-item + .nav-item {
+    margin-left: 0; }
+  .sidebar .nav-link {
+    border-radius: 0; }
 
 /*# sourceMappingURL=styles.css.map */

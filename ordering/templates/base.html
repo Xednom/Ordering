@@ -6,60 +6,45 @@
     {% block head %}<title>Base template</title>{% endblock %}
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
     <link rel="shortcut icon" href="{% static 'img/TCL_Shirt_Logo.png' %}">
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src"{% static 'js/alert-timer.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
     {% block navbar %}
     <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Static navbar -->
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'ordering:home' %}">
-             <h3>TCL Ordering</h3>
-            </a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            {% if user.is_superuser %}
-              <ul class="nav navbar-nav">
-                <li{% if 'detail' in request.path %} class="active" {% endif %}><a href="#">Dropship Information</a></li>
-                <li{% if 'inventory-menu' in request.path %} class="active" {% endif %}><a href="#">Inventory information</a></li>
-                <li><a href="#">Add order</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <!--<li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>-->
-                <li><a href="{% url 'ordering:home' %}">Home</a></li>
-                <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
-              </ul>
-            {% elif user.is_authenticated %}
-              <ul class="nav navbar-nav">
-                <li><a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">Add order</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <!--<li><a href="{% url 'ordering:view_profile' %}">{{ user.first_name }}</a></li>-->
-                <li><a href="{% url 'ordering:home' %}">Home</a></li>
-                <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
-              </ul>
-            {% endif %}
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </div>
-  </nav>
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'ordering:home' %}">
+                 <h3>TCL Ordering</h3>
+                </a>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                {% if user.is_authenticated %}
+                  <ul class="nav navbar-nav">
+                    <li><a href="{% url 'ordering:order_create' %}" class="fm-create" data-fm-head="Add new order" data-fm-callback="reload">Add order</a></li>
+                  </ul>
+
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'ordering:logout' %}">Logout</a></li>
+                  </ul>
+                 {% elif user.is_superuser %}
+                {% endif %}
+              </div>
+            </div>
+        </div>
+    </nav>
   {% endblock %}
   {% block sidebar %}
     {% if user.is_superuser %}
@@ -73,5 +58,8 @@
                 $.fm({debug: true});
             });
         </script>
+
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -5,7 +5,6 @@
 {% block head %}<title>Inventory menu</title>{% endblock %}
 {% block body %}
 <div class="container inventory-container">
-  <h1>Inventory Menu</h1>
       <div class="panel panel-default">
         <div class="panel panel-header" style="padding-left: 25px;">
           {% include 'messages/messages.html' %}
@@ -71,6 +70,9 @@
                 {% endif %}
               </ul>
             {% endif %}
+                <div class="panel panel-footer">
+                    <span><strong>{{ page_obj.paginator.count }}</strong> total products in the inventory.</span>
+                </div>
             </div>
           </ul>
         </div>

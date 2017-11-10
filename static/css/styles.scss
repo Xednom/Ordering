@@ -3,11 +3,16 @@
 //Variables
 $primary-color: #30a5ff;
 $primary-color-hover: #50b3ff;
+$lightest-color-gray: #f2f2f2;
 
+
+body {
+  background-color: $lightest-color-gray;
+}
 
 .navbar {
   border-radius: 0;
-  position: relative;
+  position: fixed;
   width: 100%;
   background-color: #438eb9;
 }
@@ -36,14 +41,18 @@ $primary-color-hover: #50b3ff;
   }
 }
 
-.order-information {
-  width: 83.8%;
-}
-
 .inventory-container {
   width:83%;
+  padding-top: 75px;
+  padding-left: 15px;
   margin-left: 317.833px;
   }
+
+.detail-container {
+  width:83%;
+  padding-top: 75px;
+  margin-left: 317.833px;
+}
 
 .login-page {
   width: 360px;
@@ -166,14 +175,41 @@ $primary-color-hover: #50b3ff;
     width: 5px;
   }
 }
-
 .sidebar {
-  a:hover {
-    background-color: #50b3ff!important;
-    color: #fff;
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  border-right: 1px solid #eee;
+  background-color: white;
+
+  .nav {
+    margin-bottom: 20px;
   }
 
-  a:active {
-    background-color: #50b3ff!important;
+  .nav-item {
+    width: 100%;
+    a:hover {
+      background-color: #50b3ff!important;
+      color: #fff;
+    }
+
+    a:active {
+      background-color: #50b3ff!important;
+    }
   }
+
+  .nav-item + .nav-item {
+    margin-left: 0;
+  }
+
+  .nav-link {
+    border-radius: 0;
+  }
+
+
 }
