@@ -55,6 +55,7 @@ class DetailView(ListView):
 
 class OrderCreateView(SuccessMessageMixin, AjaxCreateView):
     form_class = OrderForm
+    model = Order
     success_message = "Successfully added an order."
 
     def get_queryset(self):

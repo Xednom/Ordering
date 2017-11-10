@@ -60,13 +60,13 @@ class Order(models.Model):
     address = models.TextField(max_length=250)
     barangay = models.CharField(max_length=250)
     city_and_municipality = models.CharField(max_length=250)
-    zip_code = models.IntegerField(blank=True)
+    zip_code = models.IntegerField()
     province = models.CharField(max_length=250)
     phone = models.CharField(max_length=13)
     quantity = models.IntegerField()
     order = models.ForeignKey(Product)
     status = models.CharField(max_length=100, choices=ORDER_STATUS, default='On going')
-    special_instructions = models.CharField(max_length=250, default='', blank=True)
+    special_instructions = models.CharField(max_length=250, default='')
 
     def __str__(self):
         return (
