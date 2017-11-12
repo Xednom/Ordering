@@ -239,6 +239,3 @@ LOGIN_EXEMPT_URLS = (
     r'^ordering/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
     r'^ordering/reset-password/complete/$'
 )
-
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
