@@ -23,18 +23,6 @@ body {
   }
 }
 
-#id_email, #id_new_password1, #id_new_password2 {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-
 .navbar-brand {
   h3 {
     margin-top: -2px;
@@ -66,7 +54,19 @@ body {
   margin-left: 317.833px;
 }
 
-.login-page, .register-page, .forgotpassword-page, .resetpasswordconfirm-page, .resetpasswordcomplete-page, .resetpassworddone-page {
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.register-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.forgotpassword-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;

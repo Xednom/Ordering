@@ -11,7 +11,7 @@ body {
 #navbar .nav, #navbar .navbar-nav, #navbar li, #navbar a {
   color: white; }
 
-#id_email, #id_new_password1, #id_new_password2 {
+#id_email {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -43,7 +43,17 @@ body {
   padding-top: 75px;
   margin-left: 317.833px; }
 
-.login-page, .register-page, .forgotpassword-page, .resetpasswordconfirm-page, .resetpasswordcomplete-page, .resetpassworddone-page {
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto; }
+
+.register-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto; }
+
+.forgotpassword-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto; }
@@ -72,7 +82,7 @@ body {
     margin: 0 0 15px;
     box-sizing: border-box;
     font-size: 14px; }
-  .form .tcl-username, .form .tcl-password, .form .tcl-last_name, .form .tcl-first_name, .form .tcl-password1, .form .tcl-password2 {
+  .form .tcl-username, .form .tcl-password, .form .tcl-last_name, .form .tcl-first_name, .form .tcl-password1, .form .tcl-password2, .form email {
     font-family: "Roboto", sans-serif;
     outline: 0;
     background: #f2f2f2;
