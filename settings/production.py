@@ -40,7 +40,7 @@ def get_env_variable(SECRET_KEY):
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'monde.lacanlalay@gmail.com'
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-EMAIL_PORT = 587
+EMAIL_PORT = 1025
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = ''
 
@@ -53,7 +53,7 @@ MANAGERS = ADMINS
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '4)lhuo)5slmqw-p!*qkx*37=4u1z=90)3(zvrh@41tvy3ar6pd')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
