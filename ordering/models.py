@@ -60,7 +60,7 @@ class Order(models.Model):
     address = models.TextField(max_length=250)
     barangay = models.CharField(max_length=250)
     city_and_municipality = models.CharField(max_length=250)
-    zip_code = models.IntegerField()
+    zip_code = models.CharField(max_length=4)
     province = models.CharField(max_length=250)
     phone = models.CharField(max_length=13)
     quantity = models.IntegerField()

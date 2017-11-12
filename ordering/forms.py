@@ -78,17 +78,70 @@ class EditProfileForm(UserChangeForm):
 class OrderForm(forms.ModelForm):
     last_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control'.capitalize(),
+            'autocomplete': 'off',
         }
     ))
     first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control capitalize',
+            'autocomplete': 'off',
         }
     ))
     middle_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
+            'class': 'form-control capitalize',
+            'autocomplete': 'off',
+        }
+    ))
+    address = forms.CharField(required=True, widget=forms.Textarea(
+        attrs={
             'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    barangay = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    city_and_municipality = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    zip_code = forms.IntegerField(required=True, widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+            'size': '4',
+        }
+    ))
+    province = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    phone = forms.IntegerField(required=True, widget=forms.NumberInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+            'size':'13',
+        }
+    ))
+    quantity = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    special_instructions = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
         }
     ))
 
@@ -115,18 +168,82 @@ class OrderEditForm(forms.ModelForm):
     last_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
+            'autocomplete': 'off',
         }
     ))
     first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
+            'autocomplete': 'off',
         }
     ))
     middle_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
+            'autocomplete': 'off',
         }
     ))
+    address = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    barangay = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    city_and_municipality = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    zip_code = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    province = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    phone = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    quantity = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    order = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    status = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+    special_instructions = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'autocomplete': 'off',
+        }
+    ))
+
 
     class Meta:
         model = Order
