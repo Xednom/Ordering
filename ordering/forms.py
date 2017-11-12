@@ -231,12 +231,6 @@ class OrderEditForm(forms.ModelForm):
             'autocomplete': 'off',
         }
     ))
-    status = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'autocomplete': 'off',
-        }
-    ))
     special_instructions = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',

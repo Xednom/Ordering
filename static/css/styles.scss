@@ -2,25 +2,45 @@
 
 //Variables
 $primary-color: #30a5ff;
+$navbar-color1: #438eb9;
+$navbar-color2: #404040;
 $primary-color-hover: #50b3ff;
 $lightest-color-gray: #f2f2f2;
 
-
 body {
   background-color: $lightest-color-gray;
+  background-size: 1950px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .navbar {
   border-radius: 0;
   position: fixed;
   width: 100%;
-  background-color: #438eb9;
+  background-color: $navbar-color2;
+}
+
+.navbar-left {
+  .brand-logo{
+    height: 50px;
+  }
+
 }
 
 #navbar {
   .nav, .navbar-nav, li, a {
     color: white;
   }
+}
+
+.modal, .modal-bg {
+  background: transparent;
+}
+
+.modal-head {
+  color: white;
 }
 
 #id_email, #id_new_password1, #id_new_password2 {
@@ -214,12 +234,12 @@ body {
   .nav-item {
     width: 100%;
     a:hover {
-      background-color: #50b3ff!important;
+      background-color: $navbar-color2!important;
       color: #fff;
     }
 
     a:active {
-      background-color: #50b3ff!important;
+      background-color: $navbar-color2!important;
     }
   }
 
@@ -231,5 +251,84 @@ body {
     border-radius: 0;
   }
 
+}
+// fm modal
+.fm-modal {
+  .modal-content {
+    margin: 0;
+    width: auto;
+    background-clip: border-box;
+    border: 0 none;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100%;
+    padding: 0 20px 0;
+  }
+  .modal-head {
+    font-size: 2.4em;
+    text-align: center;
+  }
+  .modal-buttons {
+    text-align: left;
+    padding-left: 20px;
+  }
+  .close-modal {
+    background-color: transparent;
+    cursor: pointer;
+    height: 75px;
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 75px;
+  }
+  .close-modal:hover {
+    opacity: 0.3;
+  }
+  .close-modal .lr {
+    background-color: #222;
+    height: 75px;
+    margin-left: 35px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    width: 1px;
+    z-index: 1051;
+  }
+  .close-modal .lr .rl {
+    background-color: #ffffff;
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    width: 1px;
+    z-index: 1052;
+  }
 
+  .button-close {
+    height: 75px;
+    width: 75px;
+  }
+
+  .modal-loader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+    opacity: 0.6;
+    filter: alpha(opacity=80);
+    z-index: 1053;
+  }
+  .modal-loader-img {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -32px 0 0 -32px;
+  }
 }

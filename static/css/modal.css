@@ -6,7 +6,7 @@
     border-radius: 0;
     box-shadow: none;
     min-height: 100%;
-    padding: 100px 0 20px 0;
+    padding: 0 20px 0;
 }
 .fm-modal .modal-head {
     font-size: 2.4em;
@@ -41,8 +41,7 @@
     z-index: 1051;
 }
 .fm-modal .close-modal .lr .rl {
-    background-color: #222;
-    height: 75px;
+    background-color: #ffffff;
     transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
@@ -50,6 +49,11 @@
     -moz-transform: rotate(90deg);
     width: 1px;
     z-index: 1052;
+}
+
+.button-close {
+    height: 75px;
+    width: 75px;
 }
 
 .fm-modal .modal-loader {
