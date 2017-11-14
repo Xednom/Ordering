@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-4 col-md-3">
+    <!--<div class="col-sm-4 col-md-3">
         <div class="panel panel-default">
             <div class="panel-body">
                 <a href="{% url 'ordering:inventory_menu' %}">
@@ -19,8 +19,9 @@
                 <h2>{{ inventory.particulars }}</h2>
             </div>
         </div>
-    </div>
-    <div class="col-sm-8 col-md-9">
+    </div>-->
+
+    <div class="col-sm-8 col-md-9 inventory-detail-container">
 
         <ul class="nav nav-pills" style="margin-bottom: 10px;">
           <li role="presentation" class="active"><a href="{% url 'ordering:inventory_menu' %}">View All</a></li>

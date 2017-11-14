@@ -54,7 +54,7 @@ class Order(models.Model):
 
     date = models.DateField(("Date"), default=datetime.now)
     shipment_provider = models.CharField(max_length=100, choices=SHIPMENT_CHOICES)
-    last_name = models.CharField(max_length=250,)
+    last_name = models.CharField(max_length=250)
     first_name = models.CharField(max_length=250)
     middle_name = models.CharField(max_length=250)
     address = models.TextField(max_length=250)

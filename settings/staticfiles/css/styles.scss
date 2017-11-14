@@ -12,7 +12,7 @@ body {
   background-size: 1950px;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center;
+  background-position: center 38%;
 }
 
 .navbar {
@@ -88,6 +88,12 @@ body {
   width:83%;
   padding-top: 75px;
   margin-left: 317.833px;
+}
+
+.inventory-detail-container {
+  width: 83%;
+  margin-left: 317px;
+  margin-top: 60px;
 }
 
 .login-page, .register-page, .forgotpassword-page, .resetpasswordconfirm-page, .resetpasswordcomplete-page, .resetpassworddone-page {

@@ -40,6 +40,13 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
+class HistoryView():
+    template_name = 'ordering/detail.html'
+
+    def get_queryset(self):
+        history_list = Order.objects.filter()
+
+
 class DetailView(ListView):
     model = Order  # shorthand for setting queryset = models.Order.objects.all()
     template_name = 'ordering/detail.html'
