@@ -246,6 +246,11 @@ body {
 
   .nav-item {
     width: 100%;
+
+    a:link {
+      color: #000000;
+    }
+
     a:hover {
       background-color: $navbar-color2!important;
       color: #fff;

@@ -181,6 +181,8 @@ body {
     margin-bottom: 20px; }
   .sidebar .nav-item {
     width: 100%; }
+    .sidebar .nav-item a:link {
+      color: #000000; }
     .sidebar .nav-item a:hover {
       background-color: #404040 !important;
       color: #fff; }
