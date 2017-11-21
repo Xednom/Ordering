@@ -1,1 +1,1 @@
--r base.txt # includes base.txt requirements file
+-r requirements/base.txt # includes base.txt requirements file
