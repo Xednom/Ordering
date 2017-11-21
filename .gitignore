@@ -6,3 +6,4 @@ settings/local.py
 theme/img/product_image
 bin
 db.sqlite3
+worker.py
