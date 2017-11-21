@@ -88,6 +88,15 @@ body {
   width:83%;
   padding-top: 75px;
   margin-left: 317.833px;
+
+  .search-group {
+    padding-left: 82%;
+  }
+}
+
+.review-container {
+  padding-top: 64px;
+  width: 100%;
 }
 
 .inventory-detail-container {
@@ -226,6 +235,8 @@ body {
   .close {
     height: 5px;
     width: 5px;
+    right: 10px;
+    top: 10px;
   }
 }
 .sidebar {
@@ -246,6 +257,11 @@ body {
 
   .nav-item {
     width: 100%;
+
+    a:link {
+      color: #000000;
+    }
+
     a:hover {
       background-color: $navbar-color2!important;
       color: #fff;

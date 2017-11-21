@@ -7,6 +7,12 @@
           <div class="row row-button" style="padding-left: 25px;">
             <h3>Order Informations</h3>
           <a href="{% url 'ordering:order_create' %}" class="fm-create btn btn-primary" data-fm-head="Add new order" data-fm-callback="reload">Create new</a>
+              <form method="GET">
+                <div class="form-group search-group">{% csrf_token %}
+                    <input type="search" class="input-medium search-query" autocomplete="off" placeholder="Search last name..." name="q">
+                    <button type="submit" class="btn">Search</button>
+                </div>
+            </form>
           </div>
         </div>
         <div class="panel-body">
@@ -17,6 +23,7 @@
               <thead>
                 <tr>
                   <th>Date</th>
+                  <th>User</th>
                   <th>Shipment Provider</th>
                   <th>Name of Recipient</th>
                   <th>Address</th>
@@ -37,6 +44,7 @@
                 {% for order in all_order %}
                 <tr>
                   <td>{{ order.date }}</td>
+                  <td>{{ order.ordered_by }}</td>
                   <td>{{ order.shipment_provider }}</td>
                   <td>{{ order.last_name }}, {{ order.first_name }} {{ order.middle_name }}</td>
                   <td>{{ order.address }}</td>

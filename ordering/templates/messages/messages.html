@@ -5,6 +5,7 @@
       <div class="info">
       {% if message.tags == "info" %}
         <div class="alert alert-info fade in" role="alert">
+        <i class="fa fa-info-circle"></i>
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
           {{ message|safe }}
         </div>
@@ -12,6 +13,7 @@
       <div class="success">
       {% elif message.tags == "success" %}
         <div class="alert alert-success fade in" role="alert">
+            <i class="fa fa-check-circle"></i>
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
           {{ message|safe }}
         </div>
@@ -19,6 +21,7 @@
       <div class="warning">
       {% elif message.tags == "warning" %}
         <div class="alert alert-warning fade in" role="alert">
+            <i class="fa fa-warning-circle"></i>
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
           {{ message|safe }}
         </div>
@@ -26,6 +29,7 @@
       <div class="error">
         {% elif message.tags == "error" %}
         <div class="alert alert-danger fade in" role="alert">
+            <i class="fa fa-times-circle"></i>
           <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
           {{ message|safe }}
         </div>

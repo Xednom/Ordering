@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd part apps
     'widget_tweaks',
-    'django_modalview',
     'crispy_forms',
     'compressor',
     'fm',

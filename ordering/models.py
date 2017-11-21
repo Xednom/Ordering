@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from datetime import datetime
 
@@ -50,10 +51,13 @@ class Order(models.Model):
         ('On going', 'On going'),
         ('Shipping', 'Shipping'),
         ('On hold', 'On hold'),
+        ('Delivered', 'Delivered'),
+
     )
 
     date = models.DateField(("Date"), default=datetime.now)
     shipment_provider = models.CharField(max_length=100, choices=SHIPMENT_CHOICES)
+    ordered_by = models.ForeignKey('auth.User', editable=False)
     last_name = models.CharField(max_length=250)
     first_name = models.CharField(max_length=250)
     middle_name = models.CharField(max_length=250)
@@ -66,11 +70,12 @@ class Order(models.Model):
     quantity = models.IntegerField()
     order = models.ForeignKey(Product)
     status = models.CharField(max_length=100, choices=ORDER_STATUS, default='On going')
-    special_instructions = models.CharField(max_length=250, default='')
+    special_instructions = models.CharField(max_length=250)
 
     def __str__(self):
         return (
             self.shipment_provider
+            + ' - ' + self.ordered_by
             + ' - ' + self.last_name
             + ' - ' + self.first_name
             + ' - ' + self.middle_name
@@ -80,16 +85,3 @@ class Order(models.Model):
             + ' - ' + self.province
             + ' - ' + self.phone
         )
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    address = models.CharField(max_length=250, default='')
-    barangay = models.CharField(max_length=100, default='')
-    city = models.CharField(max_length=250, default='')
-    province = models.CharField(max_length=100, default='')
-    phone = models.IntegerField(default=0)
-    # image = models.ImageField(upload_to='profile_image', blank=True)
-
-    def __str__(self):
-        return self.user.username + ' - ' + self.address + ' - ' + self.barangay + ' - ' + self.city + ' - ' + self.province

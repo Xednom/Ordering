@@ -1,9 +1,9 @@
+import datetime
 from django.shortcuts import (
     render,
     redirect,
     get_object_or_404
 )
-from django.http import JsonResponse
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -31,8 +31,6 @@ from .models import Order, Inventory
 from .forms import RegistrationForm, EditProfileForm, OrderForm, OrderEditForm, InventoryForm
 from settings import base
 
-from django.views.decorators.csrf import csrf_protect
-
 # third party apps
 from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
@@ -40,18 +38,22 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
-class HistoryView():
-    template_name = 'ordering/detail.html'
+class HistoryView(ListView):
+    model = Order
+    context_object_name = 'user_order'
+    template_name = 'ordering/order_history.html'
+    ordering = ['-date']
+    paginate_by = 10
 
     def get_queryset(self):
-        history_list = Order.objects.filter()
+        return self.model.objects.filter(ordered_by=self.request.user)
 
 
+# FM app views
 class DetailView(ListView):
     model = Order  # shorthand for setting queryset = models.Order.objects.all()
     template_name = 'ordering/detail.html'
     context_object_name = "all_order"
-    ordering = ['-date']
     paginate_by = 10
 
     def get_context_date(self, **kwargs):
@@ -59,14 +61,24 @@ class DetailView(ListView):
         context['count'] = self.get_queryset().count()
         return context
 
+    def get_queryset(self):
+        queryset = Order.objects.all()
+
+        if self.request.GET.get('q'):
+            queryset = queryset.filter(last_name=self.request.GET.get('q'))
+        return queryset
+
 
 class OrderCreateView(SuccessMessageMixin, AjaxCreateView):
     form_class = OrderForm
     model = Order
     success_message = "Successfully added an order."
 
-    def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        order.ordered_by = self.request.user
+        order.save()
+        return super(OrderCreateView, self).form_valid(form)
 
 
 class OrderUpdateView(SuccessMessageMixin, AjaxUpdateView):
@@ -78,6 +90,7 @@ class OrderUpdateView(SuccessMessageMixin, AjaxUpdateView):
 
 class OrderDeleteView(AjaxDeleteView):
     model = Order
+    success_message = "Successfully updated this order."
     pk_url_kwarg = 'order_id'
 
 
@@ -91,8 +104,19 @@ class InventoryMenu(ListView):
     context_object_name = "all_inventorys"
     paginate_by = 10
 
+    def get_context_date(self, **kwargs):
+        context = super(Inventory, self).get_context_data(**kwargs)
+        context['count'] = self.get_queryset().count()
+        return context
 
-# FM app views
+    def get_queryset(self):
+        queryset = Inventory.objects.all()
+
+        if self.request.GET.get('q'):
+            queryset = queryset.filter(product=self.request.GET.get('q'))
+        return queryset
+
+
 class InventoryCreateView(SuccessMessageMixin, AjaxCreateView):
     form_class = InventoryForm
     success_message = "Successfully added an item to the inventory"
@@ -126,6 +150,8 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     auth_login(request, user)
+                    user.last_login = datetime.datetime.now()
+                    user.save(update_fields=['last_login'])
                     return redirect(reverse_lazy('ordering:home'))
                 else:
                     messages.warning(request, 'Your account is not activated.')

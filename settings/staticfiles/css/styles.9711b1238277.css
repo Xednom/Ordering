@@ -58,12 +58,9 @@ body {
   width: 83%;
   padding-top: 75px;
   margin-left: 317.833px; }
-  .detail-container .search-group {
-    padding-left: 82%; }
 
 .review-container {
-  padding-top: 64px;
-  width: 100%; }
+  padding-top: 64px; }
 
 .inventory-detail-container {
   width: 83%;
@@ -267,4 +264,4 @@ body {
   left: 50%;
   margin: -32px 0 0 -32px; }
 
-/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=styles.9711b1238277.css.map */

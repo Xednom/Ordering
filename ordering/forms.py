@@ -1,4 +1,5 @@
 from django import forms
+from datetime import datetime
 from django.contrib.auth.models import User
 from .models import Order, Inventory
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -46,6 +47,7 @@ class RegistrationForm(UserCreationForm):
             'placeholder': 'Confirm password',
         }
     ))
+    date_joined = forms.DateField(required=False)
 
     class Meta:
         model = User
@@ -55,7 +57,8 @@ class RegistrationForm(UserCreationForm):
             'last_name',
             'email',
             'password1',
-            'password2'
+            'password2',
+            'date_joined'
         )
 
         def save(self, commit=True):
@@ -63,9 +66,10 @@ class RegistrationForm(UserCreationForm):
             user.first_name = self.cleaned_data['first_name']
             user.last_name = self.cleaned_data['last_name']
             user.email = self.cleaned_data['email']
-
+            user.date_joined = self.cleaned_data[datetime.datetime.now()]
             if commit:
                 user.save()
+                user.date_joined.save()
 
             return user
 
@@ -85,19 +89,19 @@ class EditProfileForm(UserChangeForm):
 class OrderForm(forms.ModelForm):
     last_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
-            'class': 'form-control'.capitalize(),
+            'class': 'form-control',
             'autocomplete': 'off',
         }
     ))
     first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
-            'class': 'form-control capitalize',
+            'class': 'form-control',
             'autocomplete': 'off',
         }
     ))
     middle_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
-            'class': 'form-control capitalize',
+            'class': 'form-control',
             'autocomplete': 'off',
         }
     ))
@@ -139,7 +143,7 @@ class OrderForm(forms.ModelForm):
             'size':'13',
         }
     ))
-    quantity = forms.CharField(required=True, widget=forms.TextInput(
+    quantity = forms.CharField(required=True, widget=forms.NumberInput(
         attrs={
             'class': 'form-control',
             'autocomplete': 'off',
@@ -169,6 +173,27 @@ class OrderForm(forms.ModelForm):
             'order',
             'special_instructions',
         )
+
+        def save(self, commit=True):
+            order = super(OrderForm, self).save(commit=False)
+            order.shipment_provider = self.cleaned_data['shipment_provider']
+            order.last_name = self.cleaned_data['last_name']
+            order.first_name = self.cleaned_data['first_name']
+            order.middle_name = self.cleaned_data['middle_name']
+            order.address = self.cleaned_data['address']
+            order.barangay = self.cleaned_data['barangay']
+            order.city_and_municipality = self.cleaned_data['city_and_municipality']
+            order.zip_code = self.cleaned_data['zip_code']
+            order.province = self.cleaned_data['province']
+            order.phone = self.cleaned_data['phone']
+            order.quantity = self.cleaned_data['quantity']
+            order.order = self.cleaned_data['order']
+            order.special_instructions = self.cleaned_data['special_instructions']
+            if commit:
+                order.save()
+
+            return order
+
 
 
 class OrderEditForm(forms.ModelForm):
@@ -221,18 +246,6 @@ class OrderEditForm(forms.ModelForm):
         }
     ))
     phone = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'autocomplete': 'off',
-        }
-    ))
-    quantity = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'autocomplete': 'off',
-        }
-    ))
-    order = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
             'autocomplete': 'off',
