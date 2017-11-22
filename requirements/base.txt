@@ -7,6 +7,8 @@ django-clear-cache==0.3
 django-compressor==2.2
 django-crispy-forms==1.7.0
 django-fm==0.2.5
+gevent==1.2.2
+greenlet==0.4.12
 gunicorn==19.7.1
 psycopg2==2.7.3.2
 pytz==2017.3
