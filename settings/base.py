@@ -125,12 +125,19 @@ WSGI_APPLICATION = 'systems.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tcl',
-        'USER': 'tcladmin',
-        'PASSWORD': 'tcl',
+        'USER': 'tcl',
+        'PASSWORD': 'tcladmin',
         'HOST': 'localhost',
         'PORT': '',
+        # POSTGRESQL connection for heroku
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #'NAME': 'tcl',
+        #'USER': 'tcladmin',
+        #'PASSWORD': 'tcl',
+        #'HOST': 'localhost',
+        #'PORT': '',
     }
 }
 
