@@ -141,10 +141,10 @@ DATABASES = {
     'default': {
         # MYSQL connection
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tcl',
-        'USER': 'tcl',
+        'NAME': 'tclordering$tcl',
+        'USER': 'tclordering',
         'PASSWORD': 'tcladmin',
-        'HOST': 'localhost',
+        'HOST': 'tclordering.mysql.pythonanywhere-services.com',
         'PORT': '',
         # POSTGRESQL connection for heroku
         #'ENGINE': 'django.db.backends.postgresql_psycopg2',
