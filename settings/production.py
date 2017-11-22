@@ -58,6 +58,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'SOME+RANDOM+KEHp!*qkx*37=4u1z=90)3(zv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+COMPRESS_ENABLED = True
+
 
 # Application definition
 
