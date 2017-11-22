@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 3rd part apps
+    'django_rq',
     'crispy_forms',
     'compressor',
     'fm',
@@ -126,19 +127,19 @@ WSGI_APPLICATION = 'systems.wsgi.application'
 DATABASES = {
     'default': {
         # MYSQL connection
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'tcl',
-        #'USER': 'tcl',
-        #'PASSWORD': 'tcladmin',
-        #'HOST': 'localhost',
-        #'PORT': '',
-        # POSTGRESQL connection for heroku
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tcl',
-        'USER': 'tcladmin',
-        'PASSWORD': 'tcl',
+        'USER': 'tcl',
+        'PASSWORD': 'tcladmin',
         'HOST': 'localhost',
         'PORT': '',
+        # POSTGRESQL connection for heroku
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'tcl',
+        # 'USER': 'tcladmin',
+        # 'PASSWORD': 'tcl',
+        # 'HOST': 'localhost',
+        # 'PORT': '',
     }
 }
 
