@@ -22,19 +22,6 @@ from django.core.exceptions import ImproperlyConfigured
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# JSON-based secrets module
-with open('secrets.json') as f:
-    secrets = json.loads(f.read())
-
-def get_env_variable(SECRET_KEY):
-        """Get the environment variable or return exception."""
-        try:
-            return os.environ.get['SECRET_KEY']
-        except KeyError:
-            error_msg = 'Set the {} environment variable'.format(SECRET_KEY)
-            raise ImproperlyConfigured(error_msg)
-        SECRET_KEY = get_secret('SECRET_KEY')
-
 
 # EMAIL SETUP
 EMAIL_HOST = 'smtp.gmail.com'
@@ -53,7 +40,7 @@ MANAGERS = ADMINS
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'SOME+RANDOM+KEHp!*qkx*37=4u1z=90)3(zvrh@41tvy3ar6pd')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'SOME+RANDOM+KEHp!*qkx*37a=4u1z=90)3(zsvrh@41htvy3lar6epdy')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -140,19 +127,19 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         # MYSQL connection
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tclordering$tcl',
-        'USER': 'tclordering',
-        'PASSWORD': 'tcladmin',
-        'HOST': 'tclordering.mysql.pythonanywhere-services.com',
-        'PORT': '',
-        # POSTGRESQL connection for heroku
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #'NAME': 'tcl',
-        #'USER': 'tcladmin',
-        #'PASSWORD': 'tcl',
-        #'HOST': 'localhost',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'tclordering$tcl',
+        # 'USER': 'tclordering',
+        # 'PASSWORD': 'tcladmin',
+        # 'HOST': 'tclordering.mysql.pythonanywhere-services.com',
         #'PORT': '',
+        # POSTGRESQL connection for heroku
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tcl',
+        'USER': 'tcladmin',
+        'PASSWORD': 'tcl',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

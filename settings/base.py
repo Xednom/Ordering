@@ -22,18 +22,6 @@ from django.core.exceptions import ImproperlyConfigured
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# JSON-based secrets module
-with open('secrets.json') as f:
-    secrets = json.loads(f.read())
-
-def get_env_variable(SECRET_KEY):
-        """Get the environment variable or return exception."""
-        try:
-            return os.environ.get['SECRET_KEY']
-        except KeyError:
-            error_msg = 'Set the {} environment variable'.format(SECRET_KEY)
-            raise ImproperlyConfigured(error_msg)
-        SECRET_KEY = get_secret('SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -127,19 +115,19 @@ WSGI_APPLICATION = 'systems.wsgi.application'
 DATABASES = {
     'default': {
         # MYSQL connection
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tcl',
-        'USER': 'tcl',
-        'PASSWORD': 'tcladmin',
-        'HOST': 'localhost',
-        'PORT': '',
-        # POSTGRESQL connection for heroku
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.mysql',
         # 'NAME': 'tcl',
-        # 'USER': 'tcladmin',
-        # 'PASSWORD': 'tcl',
+        # 'USER': 'tcl',
+        # 'PASSWORD': 'tcladmin',
         # 'HOST': 'localhost',
         # 'PORT': '',
+        # POSTGRESQL connection for heroku
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'tcl',
+         'USER': 'tcladmin',
+         'PASSWORD': 'tcl',
+         'HOST': 'localhost',
+         'PORT': '',
     }
 }
 
